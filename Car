@@ -45,7 +45,7 @@ public class Car{
         return dist;
     }
 
-    public static void printStringCar(int num) throws IOException{
+    public static String printStringCar(int num) throws IOException{
         ArrayList<Integer> idies = new ArrayList<Integer>();
 
         while (num > 0) {
