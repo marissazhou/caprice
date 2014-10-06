@@ -1,6 +1,12 @@
 """
-    created by: Lijuan Marissa Zhou
-    created at: 05/10/2014 
+    created by	: Lijuan Marissa Zhou (marissa.lala.joo@gmail.com)
+    created at	: 05/10/2014 
+    created in	: Python 
+    idea	: use the _probabilities array to generate intervals for each value in _random_nums.
+		  random.random() generate a number that is between [0,1.0], use binary search to 
+		  find the right boundary or insert point of that value to get the index.
+		  The found index is the same index of the value index in _random_nums 
+		  where returned random value is.
 """
 
 import random
@@ -56,3 +62,8 @@ for i in xrange(len(counts)):
     counts[i] /= (count*1.0)
 print counts
 """
+
+"""
+SELECT p.product_id, p.name FROM product p INNER JOIN (SELECT product_id FROM orders GROUP BY product_id HAVING SUM(quantity) <10) o ON p.product_id=o.product_id WHERE p.available_from>=Date_Sub(NOW(), INTERVAL 12 MONTH) and p.available_from<Date_SUB(NOW(), INTERVAL 12 MONTH);
+"""
+
