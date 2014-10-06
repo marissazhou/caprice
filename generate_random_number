@@ -1,0 +1,58 @@
+"""
+    created by: Lijuan Marissa Zhou
+    created at: 05/10/2014 
+"""
+
+import random
+from bisect import bisect_left
+from bisect import bisect_right
+
+class RandomGen(object):
+
+    _random_nums = []
+    _probabilities = []
+    
+    def __init__(self, rn, p):
+        # Values that may be returned by next_num()
+        self._random_nums   = rn
+        # Probability of the occurence of random_nums
+        self._probabilities = p
+
+    def nextNum(self):
+        """
+            Returns one of the randomNums. When this method is called
+            multiple times over a long period, it should return the
+            numbers roughly with the initialized probabilities.
+        """
+        if self._random_nums.__len__() != self._probabilities.__len__():
+            print "two arrays do not have the same dimension!"
+        l = len(self._random_nums)
+        # generate probabilities distribution interval
+        spaces = [0]*l
+        spaces[0] = self._probabilities[0]
+        for i in xrange(1, l):
+            spaces[i] = spaces[i-1]+self._probabilities[i]
+        # last element of the interval array is 1.0 to avoid 0.9999999
+        spaces[-1] = 1.0
+        # generate a random number in [0, 1.0]
+        number = random.random()
+        # find the right insert position of the random number
+        idx = bisect_right(spaces,number,0,l)
+        return idx
+
+"""
+# test data, same as the question document
+rn = [-1, 0, 1, 2, 3]
+p = [0.01, 0.3, 0.58, 0.1, 0.01]
+x = RandomGen(rn, p)
+count = 10000
+ln = len(rn)
+counts = [0]*ln
+for i in xrange(count):
+    idx = x.nextNum()
+    counts[idx] += 1
+
+for i in xrange(len(counts)):
+    counts[i] /= (count*1.0)
+print counts
+"""
