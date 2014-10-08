@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.Stack;
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 
 public class Strings{
@@ -15,7 +16,7 @@ public class Strings{
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                isAnagram(args[0], args[1]);
+                System.out.println(reverseStr(args[0]));
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -96,4 +97,49 @@ public class Strings{
             s[k++] = temp[i++];
         }
     }
+    
+    /*
+       Given two strings, s1 and s2, write code to check if s2 is a rotation of s1
+       */
+    public static boolean isRotation(String s1, String s2) throws IOException{
+        int len = s1.length();
+        if (len == s1.length() && len > 0) {
+            String temp = s1 + s1;
+            if (temp.indexOf(s2) != -1) return true;
+        }
+        return false;
+    }
+    public static void isValidUTF8(String s) {
+        byte[] bytes = null;
+    }
+
+
+    public static void printStringCar(int num){
+        if (num < 1) return;
+        ArrayList<Integer> idies = new ArrayList<Integer>();
+        while (num>0) {
+            int c=1;
+            while((num>>c) > 0) c++;
+            idies.add(c);
+            num -= num>>(c-1);
+        }
+        System.out.print("");
+        int sign = 1;
+        for (int i=0; i<idies.size(); i++) {
+            if (i%2 != 0)
+                System.out.print('r');
+            System.out.print('a');
+        }
+    }
+
+    public static String reverseStr(String s) throws IOException{
+        if (s == null || s.length() == 0) return "";
+        StringBuffer sb = new StringBuffer();
+        int len = s.length();
+        for (int i=len-1; i>=0; i--) {
+            sb.append(s.charAt(i));
+        }
+        return sb.toString();
+    }
+
 }
