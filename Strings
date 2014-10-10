@@ -9,6 +9,10 @@ import java.io.IOException;
 
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.EmptyStackException;
 
 public class Strings{
@@ -141,5 +145,16 @@ public class Strings{
         }
         return sb.toString();
     }
+
+    public static LinkedList reverseStr(LinkedList l) throws IOException{
+        LinkedList newl = new LinkedList();
+        if (l == null || l.size() == 0) return newl;
+        Iterator ir = l.listIterator(0);
+        while (ir.hasNext()) {
+            newl.add(0,ir.next());
+        }
+        return newl;
+    }
+
 
 }
