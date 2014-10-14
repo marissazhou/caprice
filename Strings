@@ -20,21 +20,7 @@ public class Strings{
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                System.out.println(reverseStr(args[0]));
-                if (isMatch("aa","a")) System.out.println("True");
-                else System.out.println("False");
-                if (isMatch("aa","aa")) System.out.println("True");
-                else System.out.println("False");
-                if (isMatch("aaa","aa")) System.out.println("True");
-                else System.out.println("False");
-                if (isMatch("aa","a*")) System.out.println("True");
-                else System.out.println("False");
-                if (isMatch("aa",".*")) System.out.println("True");
-                else System.out.println("False");
-                if (isMatch("ab",".*")) System.out.println("True");
-                else System.out.println("False");
-                if (isMatch("aab","c*a*b")) System.out.println("True");
-                else System.out.println("False");
+                System.out.println(reverseWords("12 24 245 42"));
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -180,7 +166,7 @@ public class Strings{
       *
     */
     public static boolean isMatch(String s, String p) {
-        //if (s == null || p == null) return false;
+        if (s == null || p == null) return false;
 
         if (p.length() == 0) return s.length() == 0;
         if (p.length() == 1 || p.charAt(1) != '*') {
@@ -197,6 +183,26 @@ public class Strings{
             }
             return false;
         }
+    }
+    /** reverse words in a String 
+      * 
+      * @param s the string  
+      * @return the image at the specified URL
+      * @see 
+      *
+    */
+    public static String reverseWords(String s) throws IOException{
+        if (s == null || s.length() == 0) return s;
+        StringBuffer sb = new StringBuffer();
+        String[] ss = s.split(" ");
+        int len = ss.length;
+        for(int i = len-1; i>=0; i--) {
+            if (!ss[i].equals("")) {
+                sb.append(ss[i]);
+                sb.append(' ');
+            }
+        }
+        return sb.toString().trim();
     }
  
 }
