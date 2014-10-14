@@ -21,6 +21,20 @@ public class Strings{
         try {
             if (args.length>0){
                 System.out.println(reverseStr(args[0]));
+                if (isMatch("aa","a")) System.out.println("True");
+                else System.out.println("False");
+                if (isMatch("aa","aa")) System.out.println("True");
+                else System.out.println("False");
+                if (isMatch("aaa","aa")) System.out.println("True");
+                else System.out.println("False");
+                if (isMatch("aa","a*")) System.out.println("True");
+                else System.out.println("False");
+                if (isMatch("aa",".*")) System.out.println("True");
+                else System.out.println("False");
+                if (isMatch("ab",".*")) System.out.println("True");
+                else System.out.println("False");
+                if (isMatch("aab","c*a*b")) System.out.println("True");
+                else System.out.println("False");
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -156,5 +170,33 @@ public class Strings{
         return newl;
     }
 
+    /** regular expression matching with support for '.' and '*'.
+      * isMatch("ab", ".*") → true 
+      * 
+      * @param s the string  
+      * @param p the pattern
+      * @return the image at the specified URL
+      * @see 
+      *
+    */
+    public static boolean isMatch(String s, String p) {
+        //if (s == null || p == null) return false;
 
+        if (p.length() == 0) return s.length() == 0;
+        if (p.length() == 1 || p.charAt(1) != '*') {
+            if(s.length()<1 || 
+                (p.charAt(0) != '.' && p.charAt(0) != s.charAt(0)))
+                return false;
+            return isMatch(s.substring(1), p.substring(1));
+        } else {
+            int i = -1;
+            while(i<s.length() && 
+                    (i<0 || p.charAt(0)=='.' || p.charAt(0)==s.charAt(i))){
+                if (isMatch(s.substring(i+1), p.substring(2))) return true;
+                i++;
+            }
+            return false;
+        }
+    }
+ 
 }
