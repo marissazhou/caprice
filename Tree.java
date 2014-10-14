@@ -177,4 +177,23 @@ public class Tree{
         root.right  = sortedArrayToBBST(arr, m+1, e);
         return root;
     }
+
+    /** Judge a tree is a binary search tree or not 
+      * 
+      * @param r the root of the tree
+      * @return true/false
+      * @see 
+      *
+    */
+    public static boolean isBST(TreeNode r) {
+        return isBSTHelper(r, Integer.MAX_VALUE, Integer.MIN_VALUE);
+    }
+
+    public static boolean isBSTHelper(TreeNode r, int max, int min) {
+        if (r == null) return true;
+        if (max >= r.val && r.val >= min) 
+            return isBSTHelper(r.left, low, p.val) 
+                && isBSTHelper(r.right, p.val, max);
+        else return false;
+    }
 }
