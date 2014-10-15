@@ -17,6 +17,18 @@ public class Tree{
         Unvisited, Visited, Visiting;
     }
 
+/**
+ * Definition for binary tree
+ */
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+    }
+
+
     public static void main(String[] args) {
         try {
             if (args.length>0){
@@ -195,5 +207,32 @@ public class Tree{
             return isBSTHelper(r.left, low, p.val) 
                 && isBSTHelper(r.right, p.val, max);
         else return false;
+    }
+    /** Judge a tree is a binary search tree or not 
+      * 
+      * @param r the root of the tree
+      * @return true/false
+      * @see 
+      *
+    */
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> rst = new List<List<Integer>>();
+        if (root == null) return rst;
+
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            List<Integer> level = new List<Integer>();
+            int size = q.size();
+            for (int i=0; i<size; i++) {
+                TreeNode tmp = q.poll();
+                level.add(tmp.val);
+                if (tmp.left != null) queue.add(tmp.left);
+                if (tmp.right != null) queue.add(tmp.right);
+            }
+            rst.add(level);
+        }
+        return rst;
+
     }
 }
