@@ -1,0 +1,13 @@
+#binary tree to find the lowest and bubbles it up to the root
+public int[] minHeap(int[] arr){
+    if (arr == null) return null;
+    
+    int min = arr[0];
+    for (i=1;i<arr.length;arr++){
+        if (arr[i]<min){index=i;min=arr[i];}
+    }
+    int temp = arr[0];
+    arr[0] = arr[index];
+    arr[index] = temp;
+    return arr;
+}
