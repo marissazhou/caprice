@@ -16,6 +16,17 @@ import java.util.ListIterator;
 import java.util.EmptyStackException;
 
 public class List{
+    /**
+     * Definition for singly-linked list.
+     */
+    public class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) {
+        val = x;
+        next = null;
+        }
+     }
 
     /**
      * Definition for singly-linked list with a random pointer.
@@ -69,5 +80,15 @@ public class List{
             map.get(cur).random = map.get(mapR.get(cur));
         }
         return nh;
+    }
+    /** Copy List with Random Pointer
+      * 
+      * @param head RandomListNode head
+      * @return the head of the deeply copied list
+      * @see 
+      *
+    */
+    public static RandomListNode copyRandomList(RandomListNode head) {
+
     }
 }
