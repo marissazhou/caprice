@@ -20,7 +20,10 @@ public class Strings{
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                System.out.println(reverseWords("12 24 245 42"));
+                ArrayList<String> s = getSingleQuoteString("233242'fwerihfwhiw'fwhiewhi'fshi'fs");
+                for (int i=0; i<s.size(); i++) {
+                    System.out.println(s.get(i));
+                }
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -205,4 +208,22 @@ public class Strings{
         return sb.toString().trim();
     }
  
+    /** store strings in single quote
+      * 
+      * @param s the string  
+      * @return ArrayList of quoted wraped String
+      * @see 
+      *
+    */
+    public static ArrayList<String> getSingleQuoteString(String s) throws IOException{
+        System.out.println(s);
+        ArrayList<String> rst = new ArrayList<String>();
+        if (s == null || s.length() == 0) return rst;
+        String[] ss = s.split("\'");
+        for (int i=1; i<ss.length-1; i++) {
+            if (i%2 != 0)
+                rst.add(ss[i]);
+        }
+        return rst;
+    }
 }
