@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -20,12 +22,10 @@ public class Strings{
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                ArrayList<String> s = getSingleQuoteString("233242'fwerihfwhiw'fwhiewhi'fshi'fs");
-                for (int i=0; i<s.size(); i++) {
-                    System.out.println(s.get(i));
-                }
+                String i = strStr("eeeefwerihfaaa", "fwer");
+                System.out.println(i);
             }
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         System.exit(0);
@@ -256,5 +256,66 @@ public class Strings{
                 rst.addAll(item);
         }
         return rst;
+    }
+    
+    /** Retrieve words from a dictionary that are made up of a subsequence of characters in an input string, given an input "ABAT", matching words may include "BAT", "TAB", non-matching words may be "BART" or "BAR".
+      * 
+      * @param s the string  
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static List<String> retrieveDictWords(HashMap<String, Integer> dict, 
+            String input) {
+        return null;
+    }
+    /** KMP 
+      * 
+      * @param s the string  
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static String strStr(String haystack, String needle) { 
+        int lenh = haystack.length();
+        int lenn = needle.length();
+        if(lenn>lenh) return null;
+        if(lenn==0) return haystack;
+
+        int[] overlay = getOverlay(needle);
+        int i=0;
+        while (i <= lenh-lenn) {
+            int success = 1;
+            for (int j=0; j<lenn; j++) {
+                if (needle.charAt(0) != haystack.charAt(i)) {
+                    success = 0;
+                    i++;
+                    break;
+                } else if(needle.charAt(j) != haystack.charAt(i+j)) {
+                    success = 0;
+                    i = i+j-overlay[j-1];
+                    break;
+                }
+            }
+            if (success == 1)
+                return haystack.substring(i);
+        }
+        return null;
+    }
+    public static int[] getOverlay(String needle) {
+        int[] overlay = new int[needle.length()];
+        overlay[0] = 0;
+        for (int i=1; i<needle.length(); i++) {
+            int index = overlay[i-1];
+            while(index>0 && needle.charAt(index) != needle.charAt(i)) {
+                index = overlay[index-1];
+            }
+            if (needle.charAt(index) == needle.charAt(i)) {
+                overlay[i] = overlay[i-1] + 1;
+            } else {
+                overlay[i] = 0;
+            }
+        }
+        return overlay;
     }
 }
