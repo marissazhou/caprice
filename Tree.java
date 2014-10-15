@@ -235,4 +235,23 @@ public class Tree{
         return rst;
 
     }
+    /** Flatten Binary Tree to Linked List, https://oj.leetcode.com/problems/flatten-binary-tree-to-linked-list/ 
+      * 
+      * @param root the root of the tree
+      * @return 
+      * @see 
+      *
+    */
+    private TreeNode cur = null;
+    public static void flatten(TreeNode root) {
+        if (root == null) return;
+        if (cur != null) {
+            cur.left = null;
+            cur.right = root;
+        }
+        cur = root;
+        TreeNode right = root.right;
+        flatten(root.left);
+        flatten(right);
+    }
 }
