@@ -226,4 +226,35 @@ public class Strings{
         }
         return rst;
     }
+    /** Anagrams; Given an array of strings, return all groups of strings that are anagrams.
+      * 
+      * @param s the string  
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static List<String> anagrams(String[] strs) throws IOException{
+        List<String> rst = new ArrayList<String>();
+        if (strs == null || strs.length == 0) return null;
+        HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>(); 
+        for (int i=0; i<strs.length; i++){
+            char[] charArr = strs[i].toCharArray();
+            Arrays.sort(charArr);
+            String tmp = new String(charArr);
+            if (map.containsKey(tmp)) 
+                map.get(tmp).add(strs[i]);
+            else {
+                ArrayList<String> list = new ArrayList<String>();
+                list.add(strs[i]);
+                map.put(tmp, list);
+            }
+        }
+        Iterator ir = map.values().iterator();
+        while(ir.hasNext()) {
+            ArrayList<String> item = (ArrayList<String>)ir.next();
+            if (item.size() > 1)
+                rst.addAll(item);
+        }
+        return rst;
+    }
 }
