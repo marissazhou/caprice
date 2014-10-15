@@ -85,6 +85,13 @@ public class Number{
             return result;
         }
     }
+    /** get int value of sqrt x
+      * 
+      * @param x int value
+      * @return sqrt of x 
+      * @see 
+      *
+      */
     public static int sqrt(int x) {
         if (x<=0) return 0;
         long h = 0, l = 0;
