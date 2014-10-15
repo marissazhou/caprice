@@ -23,8 +23,21 @@ public class List{
         int val;
         ListNode next;
         ListNode(int x) {
-        val = x;
-        next = null;
+            val = x;
+            next = null;
+        }
+     }
+    /**
+     * Definition for doubly-linked list.
+     */
+    public class DoubleListNode {
+        int val;
+        DoubleListNode next;
+        DoubleListNode prev;
+        DoubleListNode (int x) {
+            val = x;
+            next = null;
+            prev = null;
         }
      }
 
@@ -88,7 +101,7 @@ public class List{
       * @see 
       *
     */
-    public static RandomListNode copyRandomList(RandomListNode head) {
+    public static LinkedList reverseDoublyLinkedList(RandomListNode head) {
 
     }
 }
