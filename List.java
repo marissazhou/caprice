@@ -44,8 +44,8 @@ public class List{
 
     /** Copy List with Random Pointer
       * 
-      * @param s the string to decode like '1235478' 
-      * @return how many ways to decode the string
+      * @param head RandomListNode head
+      * @return the head of the deeply copied list
       * @see 
       *
     */
