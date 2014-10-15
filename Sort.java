@@ -56,4 +56,28 @@ public class Sort{
         A[i] = A[j];
         A[j] = tmp;
     }
+    /** HeapSort, the parent of i is (i-1)/2, two childrn are 2i+1 and 2i+2 
+      * 
+      * @param s the string to decode like '1235478' 
+      * @return how many ways to decode the string
+      * @see 
+      *
+    */
+    public static void minHeapAddNumber(int a[], int n, int nNum) {
+        a[n] = nNum;
+        minHeapFixup(a, n);
+    }
+    public static void minHeapFixup(int[] a, int i) {
+        for (int j=(i-1)/2; (j>=0&&!=0) && a[i]>a[j]; i=j, j=(i-1)/2)
+            swap(a, i, j);
+    }
+    public static void swap(int[] a, int i, int j) {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    public static void minHeapDeleteNumber(int a[], int n) {
+        swap(a, 0, n-1);
+        minHeapFixdown(a, 0, n-1);
+    }
 }
