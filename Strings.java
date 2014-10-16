@@ -371,6 +371,35 @@ public class Strings{
         }
         return 0;
     }
+    /** Word Ladder, 
+        Use Adjacency List
+      * 
+      * @param start String of Start 
+      * @param end String of End 
+      * @param dict the dictionary HashSet<String>
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static int wordLadderGraph(String start, 
+            String end, 
+            HashSet<String> dict) { 
+    }
+    public class LadderNode {
+        public int dist;
+        public String str;
+        public LinkedList<Node> prev; 
+
+        public Node(int dist, String str) { 
+            this.dist = dist;
+            this.str = str;
+            this.prev = new LinkedList<Node>();
+        }
+
+        public void addPrev(Node pNode) {
+            prev.add(pNode);
+        }
+    }
     /** Word Ladder II, Given two words (start and end), 
         Given two words (start and end), and a dictionary,
         find all shortest transformation sequence(s) from 
@@ -384,9 +413,84 @@ public class Strings{
       * @see 
       *
     */
-    public static int findLadders(String start, 
+    public static ArrayList<ArrayList<String>> findLadders(String start, 
             String end,
             HashSet<String> dict) { 
-        return 0;
+        dict.add(end);
+        Map<String, LadderNode> map = new HashMap<String, LadderNode>(); 
+        Queue<String> queue = new LinkedList<String>(); 
+        LadderNode startNode = new LadderNode(1, start);
+        queue.offer(start);
+        map.put(start, startNode);
+
+        ArrayList<ArrayList<String>> ret = 
+            new ArrayList<ArrayList<String>>();
+
+        while (!queue.isEmpty()) {
+            String str = queue.poll();
+            // find a path
+            if (str.equals(end)) {
+                getPaths(map.get(end), map, new ArrayList<String>(), ret);
+                return ret;
+            }
+            // keep searching 
+            for (int i = 0; i < str.length(); i++) {
+                for (int j = 0; j < 26; j++) { 
+                    String newStr = replace(str, i, (char) ('a' + j));
+
+                    // if new word is in the dict
+                    if (dict.contains(newStr)) {
+                        if (!map.containsKey(newStr)) {
+                            LadderNode node = map.get(str); 
+                            LadderNode newNode = 
+                                new LadderNode(node.dist + 1, newStr);
+                            newNode.prev = new LinkedList<Node>();
+                            newNode.prev.add(node);
+                            map.put(newStr, newNode);
+                            queue.offer(newStr);
+                        } else {
+                            LadderNode node = map.get(newStr);
+                            LadderNode prevNode = map.get(str);
+                            if (node.dist == prevNode.dist + 1) {
+                                node.addPrev(prevNode); 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+    // replace the index of the given string with the given char  
+    public static String replace(String str, int i, char c){
+        StringBuffer sb = new StringBuffer(str);
+        sb.setCharAt(i, c);
+        return sb.toString();
+    }
+    /** get all the paths by using DFS
+      * 
+      * @param end end node
+      * @param map map of nodes 
+      * @param curPath current path  
+      * @param path all paths 
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static void getPaths(LadderNode end, Map<String, LadderNode> map,
+            ArrayList<String> curPath, ArrayList<ArrayList<String>> paths){
+        if (end == null) {
+            paths.add(curPath);
+            return;
+        }
+        curPath.add(0, end.str);
+        if (!end.prev.isEmpty()) {
+            for (LadderNode prevNode : end.prev) {
+                getPaths(prevNode, map,
+                        new ArrayList<String>(curPath));
+            }
+        } else {
+            getPaths(null, map, curPath, paths);
+        }
     }
 }
