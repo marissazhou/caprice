@@ -20,6 +20,7 @@ public class Bit{
     public static void main(String[] args) {
         try {
             if (args.length>0){
+                /*
                 byte[] d = new byte[]{(byte)10101001, (byte)01001100};
                 byte[] p = new byte[]{(byte)10100000};
                 ArrayList<Integer> r = bitPatternMatch(d, 14, p, 3);
@@ -27,7 +28,9 @@ public class Bit{
                     System.out.print(r.get(i));
                     System.out.print(" ");
                 }
-                System.out.println();
+                */
+                int i = numOfBits(Integer.valueOf(args[0]));
+                System.out.println(i);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -54,5 +57,25 @@ public class Bit{
             continue;
         }
         return r;
+    }
+
+    /** get number of bits in a integer
+      * 
+      * @param n the number
+      * @return int number of 1s in binary
+      * @see 
+      *
+    */
+    public static int numOfBits(int n){
+        int rst = 0;
+        if (n == 0) return rst;
+        else{
+            rst = 0;
+            while (n != 0){
+                n = n & (n-1);
+                rst = rst + 1;
+            }
+        }
+        return rst; 
     }
 }
