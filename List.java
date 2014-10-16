@@ -104,4 +104,31 @@ public class List{
     public static LinkedList reverseDoublyLinkedList(RandomListNode head) {
 
     }
+    /** Given numRows, generate the first numRows of Pascal's triangle.
+      * 
+      * @param numRows number of rows
+      * @return list of list of triangle
+      * @see 
+      *
+    */
+
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (numRows <= 0) return result;
+        ArrayList<Integer> line = new ArrayList<Integer>();
+        line.add(1);
+        result.add(line);
+        for (int i=1; i<numRows; i++){
+            line = new ArrayList<Integer>();
+            for (int j=1; j<i; j++){
+                List<Integer> preline = result.get(i-1);
+                line.add(preline.get(j-1)+preline.get(j));
+            }
+            line.add(0, 1);
+            line.add(1);
+            result.add(line);
+        }
+        return result;
+    }
+
 }
