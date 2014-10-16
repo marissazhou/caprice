@@ -8,10 +8,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.util.Stack;
+import java.util.Queue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -22,7 +25,9 @@ public class Strings{
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                String i = strStr("eeeefwerihfaaa", "fwer");
+                String[] SET_VALUES = new String[]{"hot","dot","dog","lot","log"};
+                HashSet<String> dict = new HashSet<String>(Arrays.asList(SET_VALUES));
+                int i = wordLadder("hit", "cog", dict);
                 System.out.println(i);
             }
         } catch (Exception e){
@@ -31,7 +36,7 @@ public class Strings{
         System.exit(0);
     }
 
-    public static void removeDuplicates(String s) throws IOException{
+    public static void removeDuplicates(String s){
         StringBuffer result = new StringBuffer();
         if (s == null) return;
         int len = s.length();
@@ -53,7 +58,7 @@ public class Strings{
         System.out.println(result.toString());
     }
 
-    public static boolean isAnagram(String sa, String sb) throws IOException{
+    public static boolean isAnagram(String sa, String sb){
         if (sa == null || sb == null) return false;
         String s1 = sortString(sa);
         String s2 = sortString(sb);
@@ -70,12 +75,12 @@ public class Strings{
         return (sortString(sa).equals(sortString(sb)));
     }
 
-    public static String sortString(String s) throws IOException{
+    public static String sortString(String s) {
         char[] data = s.toCharArray();
         mergeSort(data, 0, data.length-1);
         return String.valueOf(data);
     }
-    public static void mergeSort(char[] s, int low, int high) throws IOException{
+    public static void mergeSort(char[] s, int low, int high){
         if (s == null || s.length < 2) return;
         if (low >= high) return;
         int middle = low + (high - low) / 2;
@@ -83,7 +88,7 @@ public class Strings{
         mergeSort(s, middle+1, high);
         merge(s, low, middle, high);
     }
-    public static void merge(char[] s, int low, int middle, int high) throws IOException{
+    public static void merge(char[] s, int low, int middle, int high){
         char[] temp = new char[s.length];   
         for (int i=low; i<=high; i++){
            temp[i] = s[i]; 
@@ -317,5 +322,71 @@ public class Strings{
             }
         }
         return overlay;
+    }
+
+    /** Word Ladder, Given two words (start and end), 
+        and a dictionary, find the length of shortest 
+        transformation sequence from start to end 
+        Use Breath First Search approach
+      * 
+      * @param start String of Start 
+      * @param end String of End 
+      * @param dict the dictionary HashSet<String>
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static int wordLadder(String start, 
+            String end, 
+            HashSet<String> dict) { 
+        System.out.println(dict.size());
+        System.out.println(start);
+        System.out.println(end);
+        if (start == null || end == null || dict.size() == 0) return 0;
+
+        LinkedList<String> wq = new LinkedList<String>(); 
+        LinkedList<Integer> wc = new LinkedList<Integer>(); 
+        wq.add(start);
+        wc.add(1);
+
+        while(!wq.isEmpty()) {
+            String cw = wq.pop();
+            int cc = wc.pop();
+
+            if (cw.equals(end)) return cc;
+            System.out.println(wq);
+
+            for (int i=0; i<cw.length(); i++) {
+                char[] cs = cw.toCharArray();
+                for (char a = 'a'; a<='z'; a++){
+                    cs[i] = a;
+                    String nstart = new String(cs);
+                    if (dict.contains(nstart)) {
+                        wq.add(nstart);
+                        wc.add(cc+1);
+                        dict.remove(nstart);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+    /** Word Ladder II, Given two words (start and end), 
+        Given two words (start and end), and a dictionary,
+        find all shortest transformation sequence(s) from 
+        start to end, such that:
+        Use Breath First Search approach
+      * 
+      * @param start String of Start 
+      * @param end String of End 
+      * @param dict the dictionary HashSet<String>
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static int findLadders(String start, 
+            String end,
+            HashSet<String> dict) { 
+        return 0;
     }
 }
