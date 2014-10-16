@@ -17,9 +17,9 @@ public class Number{
     public static void main(String[] args) {
         try {
             if (args.length>0) {
-                System.out.println(factorial(Integer.valueOf(args[0])) + "");
+                System.out.println(fibonacciA(Integer.valueOf(args[0])));
             }
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         System.exit(0);
@@ -96,10 +96,33 @@ public class Number{
         if (x<=0) return 0;
         long h = 0, l = 0;
         while(h>=l) {
-            long mid = l+(h-l)/2.0;
+            long mid = l+(h-l)/2;
             if(x < mid*mid) h = mid - 1;
             else l = mid + 1;
         }
         return (int)h;
+    }
+    /**  get the n-th Fibonacci number, recursively
+      * 
+      * @param x int value
+      * @return sqrt of x 
+      * @see 
+      *
+      */
+    public static long fibonacci(int n) {
+        if (n <= 0) return 0;
+        return n <= 2 ? 1 : fibonacci(n-1) + fibonacci(n-2);
+    }
+    /**  get the n-th Fibonacci number, analytically 
+      * 
+      * @param n int value
+      * @return the nth fib
+      * @see 
+      *
+      */
+    public static long fibonacciA(int n) {
+        double p = (1 + Math.sqrt(5)) /2;
+        double q = 1 / p;
+        return (long) (( Math.pow(p, n) + Math.pow(q, n)) / Math.sqrt(5));
     }
 }
