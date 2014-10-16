@@ -307,6 +307,7 @@ public class Strings{
         }
         return null;
     }
+
     public static int[] getOverlay(String needle) {
         int[] overlay = new int[needle.length()];
         overlay[0] = 0;
@@ -371,7 +372,8 @@ public class Strings{
         }
         return 0;
     }
-    /** Word Ladder, 
+
+    /** Word Ladder
         Use Adjacency List
       * 
       * @param start String of Start 
@@ -385,6 +387,10 @@ public class Strings{
             String end, 
             HashSet<String> dict) { 
     }
+
+    /** LadderNode class for WordLadder II
+      * 
+    */
     public class LadderNode {
         public int dist;
         public String str;
@@ -400,6 +406,7 @@ public class Strings{
             prev.add(pNode);
         }
     }
+
     /** Word Ladder II, Given two words (start and end), 
         Given two words (start and end), and a dictionary,
         find all shortest transformation sequence(s) from 
@@ -461,12 +468,23 @@ public class Strings{
         }
         return ret;
     }
-    // replace the index of the given string with the given char  
+
+    /** replace the index of the given string with the given char
+      * 
+      * @param end end node
+      * @param map map of nodes 
+      * @param curPath current path  
+      * @param path all paths 
+      * @return List of all anagrams
+      * @see 
+      *
+    */
     public static String replace(String str, int i, char c){
         StringBuffer sb = new StringBuffer(str);
         sb.setCharAt(i, c);
         return sb.toString();
     }
+
     /** get all the paths by using DFS
       * 
       * @param end end node
