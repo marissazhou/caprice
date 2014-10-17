@@ -17,7 +17,7 @@ public class Number{
     public static void main(String[] args) {
         try {
             if (args.length>0) {
-                System.out.println(fibonacciA(Integer.valueOf(args[0])));
+                System.out.println(divide(Integer.valueOf(args[0]),Integer.valueOf(args[1])));
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -85,6 +85,7 @@ public class Number{
             return result;
         }
     }
+
     /** get int value of sqrt x
       * 
       * @param x int value
@@ -102,6 +103,7 @@ public class Number{
         }
         return (int)h;
     }
+
     /**  get the n-th Fibonacci number, recursively
       * 
       * @param x int value
@@ -113,6 +115,7 @@ public class Number{
         if (n <= 0) return 0;
         return n <= 2 ? 1 : fibonacci(n-1) + fibonacci(n-2);
     }
+
     /**  get the n-th Fibonacci number, analytically 
       * 
       * @param n int value
@@ -124,5 +127,94 @@ public class Number{
         double p = (1 + Math.sqrt(5)) /2;
         double q = 1 / p;
         return (long) (( Math.pow(p, n) + Math.pow(q, n)) / Math.sqrt(5));
+    }
+
+    /**  division implementation without +, - or multiplication
+      * 
+      * @param x dividend
+      * @param y divisor
+      * @return the division result
+      * @see 
+      *
+      */
+    public static int divide(int x, int y) {
+        int quotient = 1;
+        if (x == y) return 1;
+        if (x < y) return 0;
+        do {
+            y <<= 1;
+            quotient <<= 1;
+        } while (y <= x);
+        if (x < y) {
+            y >>= 1;
+            quotient >>= 1;
+        }
+        quotient = add(quotient, divide(x - y, y));
+        return quotient;
+    }
+
+    /** add implementation without +, - or multiplication
+      * 
+      * @param x 
+      * @param y 
+      * @return the division result
+      * @see 
+      *
+      */
+    public static int add(int x, int y) {
+        do {
+            x ^= y;
+            y &= x ^ y;
+            y <<= 1;
+        } while (Math.abs(y) != 0);
+        return x;
+    }
+
+    /** sustraction implementation without +, - or multiplication
+      * 
+      * @param x 
+      * @param y 
+      * @return the substract result
+      * @see 
+      *
+      */
+    public static int substract(int x, int y) {
+        return 0;
+    }
+
+    /** multiplication implementation without +, - or multiplication
+      * 
+      * @param x 
+      * @param y 
+      * @return the multiple result
+      * @see 
+      *
+      */
+    public static int multiply(int x, int y) {
+        return 0;
+    }
+
+    /** is two numbers with the same sign 
+      * 
+      * @param x 
+      * @param y 
+      * @return true/false
+      * @see 
+      *
+      */
+    public static boolean isSameSign(int x, int y) {
+        return (x^y) >= 0;
+    }
+
+    /** switch if(x == a) x = b; if(x == b) x = a;
+      * 
+      * @param x 
+      * @param y 
+      * @return the switch result
+      * @see 
+      *
+      */
+    public static int switch(int x, int a, int b) {
+        return a ^ b ^ x;
     }
 }
