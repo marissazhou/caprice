@@ -63,21 +63,46 @@ public class Sort{
       * @see 
       *
     */
-    public static void minHeapAddNumber(int a[], int n, int nNum) {
+    public static void minHeapAddNumber(int[] a, int n, int nNum) {
         a[n] = nNum;
         minHeapFixup(a, n);
     }
     public static void minHeapFixup(int[] a, int i) {
-        for (int j=(i-1)/2; (j>=0&&!=0) && a[i]>a[j]; i=j, j=(i-1)/2)
+        for (int j=(i-1)/2; (j>=0&&i!=0) && a[i]>a[j]; i=j, j=(i-1)/2)
             swap(a, i, j);
     }
-    public static void swap(int[] a, int i, int j) {
-        int tmp = a[i];
-        a[i] = a[j];
-        a[j] = tmp;
-    }
-    public static void minHeapDeleteNumber(int a[], int n) {
+    public static void minHeapDeleteNumber(int[] a, int n) {
         swap(a, 0, n-1);
         minHeapFixdown(a, 0, n-1);
+    }
+    public static void minHeapFixdown(int[] a, int i, int j) {
+    }
+
+    /** QuickSort
+      * 
+      * @param a the array to be sorted 
+      * @return the sorted array
+      * @see 
+      *
+    */
+    public static void quickSort(int[] a, int start, int end) {
+        if (a == null || a.length == 0 || end <= start) return;
+
+        int mid = start + (end-start)/2;
+        int pivot = a[mid];
+        int i=start, j=end;
+        while (i<=j){
+            while (a[i] < pivot) i++;
+            while (a[j] > pivot) j--;
+            if (i<=j) { // has to be equal, otherwise endless loop
+                swap(a, i, j);
+                i++;
+                j--;
+            }
+        }
+        if (start < j)
+            quickSort(a, start, j);
+        if (end > i)
+            quickSort(a, i, end);
     }
 }
