@@ -10,18 +10,15 @@ import java.io.IOException;
 import java.util.Stack;
 import java.util.EmptyStackException;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Array{
-
-    public enum State {
-        Unvisited, Visited, Visiting;
-    }
-
-
     /**
      * Definition for singly-linked list.
      */
-    public class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
         ListNode(int x) {
@@ -29,17 +26,18 @@ public class Array{
             next = null;
         }
     }
+
+    public enum State {
+        Unvisited, Visited, Visiting;
+    }
+
+
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                int[] nums = new int[]{1,2,3,4,5,6,7,7,7,8,8,8,9,9,12,13};
-                int target = 16;
-                int idx = searchInSortedArrayDup(nums, target); 
-                for (int i : nums) System.out.print(i);
                 System.out.println();
-                System.out.println(idx);
             }
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         System.exit(0);
@@ -79,6 +77,25 @@ public class Array{
       * @see 
       *
     */
+    public static void merge2SortedArray(
+            int A[], int m, int B[], int n) {
+        int index = m+n;
+        while (m>0 && n>0) {
+            if (A[m-1] > B[n-1]) 
+                A[--index] = A[--m];
+            else
+                A[--index] = B[--n];
+        }
+        while (n>0) 
+            A[--index] = B[--n];
+    }
+    /**  
+      * 
+      * @param arrs ArrayList of arrays to merge
+      * @return sorted array 
+      * @see 
+      *
+    */
     public static ListNode mergeKLists(
             ArrayList<ListNode> lists) {
         if (lists == null || lists.size() == 0) return null;
@@ -93,7 +110,7 @@ public class Array{
         };
         //PriorityQueue is a sorted queue
         PriorityQueue<ListNode> q = new PriorityQueue<ListNode>(
-                list.size(),
+                lists.size(),
                 comparator);
         for (ListNode l : lists) {
             if (l != null) q.add(l);
@@ -107,8 +124,39 @@ public class Array{
             prev.next = tmp;
             prev = prev.next;
 
-            if (tmp.next() != null) q.add(tmp.next());
+            if (tmp.next != null) q.add(tmp.next);
         }
-        return head.next();
+        return head.next;
+    }
+
+    /** merge 3 sorted arrays, without any duplicates 
+      * 
+      * @param arrs ArrayList of arrays to merge
+      * @return sorted array 
+      * @see 
+      *
+    */
+    public char[] merge3Arrays(char[] a1, char[] a2, char[] a3){
+        char[] cs = new char[a1.length];
+        int SIZE = a1.length + a2.length + a3.length;
+        if (a1 == null || a2 == null || a3 == null) return cs;
+        boolean[] f = new boolean[256]; //ascii table character， char is 16 bits 2^16
+        for (char c : a1){f[c] = true;}
+        for (char c : a2){f[c] = true;}
+        for (char c : a3){f[c] = true;}
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<SIZE;i++) {if(f[i]) sb.append((char)i);}
+        return sb.toString().toCharArray();
+    }
+
+    /**  if one array is a subset of another
+      * 
+      * @param arrs ArrayList of arrays to merge
+      * @return sorted array 
+      * @see 
+      *
+    */
+    public boolean isSubset(int[] a1, int[] a2){
+        return true;
     }
 }
