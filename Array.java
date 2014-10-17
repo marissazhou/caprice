@@ -36,6 +36,8 @@ public class Array{
         try {
             if (args.length>0){
                 System.out.println();
+                if (isSubset(new int[]{10,9,1,2,3,4}, new int[]{2,11}))
+                    System.out.println("yes");
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -150,13 +152,54 @@ public class Array{
     }
 
     /**  if one array is a subset of another
+         There is possibly duplicates
+         Complexity: O(mLogm + nLogn)
       * 
-      * @param arrs ArrayList of arrays to merge
-      * @return sorted array 
+      * @param a1 the first array
+      * @param a2 the second array
+      * @return true if a2 is subset of a1
       * @see 
       *
     */
-    public boolean isSubset(int[] a1, int[] a2){
-        return true;
+    public static boolean isSubset(int[] a1, int[] a2){
+        if (a1 == null && a2 == null) return true;
+        if (a1 == null) return false;
+        if (a2 == null || a2.length == 0) return true;
+        int m = a1.length;
+        int n = a2.length;
+        if (m<n) return false;
+        int i=0, j=0;
+        // sort
+        Sort sort = new Sort();
+        sort.quickSort(a1, 0, m-1);
+        sort.quickSort(a2, 0, n-1);
+        // merge
+        while (i<m && j<n) {
+            if (a1[i] < a2[j]) i++;
+            else if (a1[i] == a2[j]){
+                i++;
+                j++;
+            } else {
+                return false;
+            }
+        }
+        if (i<m)
+            return true;
+        else
+            return false;
+    }
+
+    /**  print array
+      * 
+      * @param a the array to print
+      * @return 
+      * @see 
+      *
+    */
+    public static void printArray(int[] a){
+        for (int i : a) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
     }
 }
