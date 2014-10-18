@@ -29,7 +29,7 @@ public class Bit{
                     System.out.print(" ");
                 }
                 */
-                int i = numOfBits(Integer.valueOf(args[0]));
+                int i = reverseOneBit(Integer.valueOf(args[0]), Integer.valueOf(args[1]));
                 System.out.println(i);
             }
         } catch (Exception e){
@@ -77,5 +77,16 @@ public class Bit{
             }
         }
         return rst; 
+    }
+
+    /** Reverse the ith lowest bit
+      *
+      * @param i the index 
+      * @return reversed number
+      * @see 
+      *
+    */
+    public static int reverseOneBit(int x, int n){
+        return x ^ (( 1 << n ) - 1);
     }
 }
