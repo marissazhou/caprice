@@ -94,6 +94,7 @@ public class List{
         }
         return nh;
     }
+
     /** Copy List with Random Pointer
       * 
       * @param head RandomListNode head
@@ -104,6 +105,7 @@ public class List{
     public static LinkedList reverseDoublyLinkedList(RandomListNode head) {
 
     }
+
     /** Given numRows, generate the first numRows of Pascal's triangle.
       * 
       * @param numRows number of rows
@@ -111,7 +113,6 @@ public class List{
       * @see 
       *
     */
-
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
         if (numRows <= 0) return result;
@@ -131,4 +132,35 @@ public class List{
         return result;
     }
 
+    /** Given numRows, generate the first numRows of Pascal's triangle.
+      * Time Complexity: O(n)
+      * Space Complexity: O(1)
+      * 
+      * @param numRows number of rows
+      * @return list of list of triangle
+      * @see 
+      *
+    */
+    public void recursiveReverseLL(ListNode head) {
+        if (head == null || head.next == null) return;
+        ListNode first = head;
+        ListNode rest = head.next;
+        recursiveReverseLL(rest);
+        first.next.next = first;
+        first.next = null;
+        head = rest;
+    }
+    public void iterativeReverseLL(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = null;
+        ListNode cur = head;
+        ListNode nxt = head;
+        while (cur != null) {
+            nxt = cur.next();
+            cur.next = dummy.next;
+            dummy.next = cur;
+            cur = nxt;
+        }
+        head = dummy.next;
+    }
 }
