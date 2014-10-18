@@ -17,7 +17,8 @@ public class Number{
     public static void main(String[] args) {
         try {
             if (args.length>0) {
-                System.out.println(divide(Integer.valueOf(args[0]),Integer.valueOf(args[1])));
+                System.out.println(getBit(Integer.valueOf(args[0]),Integer.valueOf(args[1])));
+                //System.out.println(getBit(Integer.valueOf(args[0])));
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -183,15 +184,25 @@ public class Number{
     }
 
     /** multiplication implementation without +, - or multiplication
+      * a*b = a*(x*2^0 + x*2^1....x*2^n),
       * 
-      * @param x 
-      * @param y 
+      * @param a 
+      * @param b 
       * @return the multiple result
       * @see 
       *
       */
-    public static int multiply(int x, int y) {
-        return 0;
+    public static int multiply(int a, int b) {
+        int i = 0;
+        int sum = 0;
+        while (b != 0) {
+            if ((b & 1) != 0) { // b is an odd number, means bit there is 1
+                sum += (a << i);
+            }
+            i++;
+            b >>= 1;
+        }
+        return sum;
     }
 
     /** is two numbers with the same sign 
@@ -214,7 +225,44 @@ public class Number{
       * @see 
       *
       */
-    public static int switch(int x, int a, int b) {
+    public static int switchValue(int x, int a, int b) {
         return a ^ b ^ x;
+    }
+
+    /** switch the value of ith and jth item in a 
+      * 
+      * @param a the array 
+      * @param i index 
+      * @param j index 
+      * @return the switch result
+      * @see 
+      *
+      */
+    public static void swap(int[] arr, int i, int j) {
+        arr[i] = arr[i]^arr[j];
+        arr[j] = arr[j]^arr[i];
+        arr[i] = arr[i]^arr[j];
+    }
+
+    /** check if a number can be represented as a power of 2
+      * 
+      * @param n 
+      * @return true/false
+      * @see 
+      *
+      */
+    public static boolean isPowerOf2(int n) {
+        return (n & (n-1)) == 0;
+    }
+
+    /** is bit at index i 1, i starts from 1 not 0;
+      * 
+      * @param n 
+      * @return true/false
+      * @see 
+      *
+      */
+    public static boolean getBit(int n, int i) {
+        return (n & (1<<(i-1))) != 0;
     }
 }
