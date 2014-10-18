@@ -208,6 +208,7 @@ public class Tree{
                 && isBSTHelper(r.right, p.val, max);
         else return false;
     }
+
     /** Judge a tree is a binary search tree or not 
       * 
       * @param r the root of the tree
@@ -235,6 +236,7 @@ public class Tree{
         return rst;
 
     }
+
     /** Flatten Binary Tree to Linked List, https://oj.leetcode.com/problems/flatten-binary-tree-to-linked-list/ 
       * 
       * @param root the root of the tree
@@ -253,5 +255,30 @@ public class Tree{
         TreeNode right = root.right;
         flatten(root.left);
         flatten(right);
+    }
+
+    /** Print the tree in level order but using DFS
+      * It is easy to use Queue for BFS level order
+      * 
+      * @param root the root of the tree
+      * @return 
+      * @see 
+      *
+    */
+    public static void levelTraverseDFS(TreeNode root) {
+        if (root == null) return;
+        int height = maxHeight(root);
+        for (int level=1; level <= height; level++) {
+            printlevel(root, level);
+            System.out.println();
+        }
+    }
+    public static void printlevel(TreeNode p, int level) {
+        if (p == null) return;
+        if (level == 1) System.out.println(p.val);
+        else {
+            System.out.println(p.left, level-1);
+            System.out.println(p.right, level-1);
+        }
     }
 }
