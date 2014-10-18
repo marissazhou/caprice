@@ -105,4 +105,36 @@ public class Bit{
         }
         return s>0 ? s-1 : -1;
     }
+
+    /** Setting and getting a bit at indext i
+      *
+      * @param n the number
+      * @param i the index
+      * @return the new number
+      * @see 
+      *
+    */
+    public static int setBit(int n, int i){
+        n = n | (1<<i);
+        return n;
+    }
+    public static int getBit(int n, int i){
+        if ((n & (1<<i))!=0) return 1;
+        return 0;
+    }
+
+    /** Clearing the bits between index i and j
+      *
+      * @param n the number
+      * @param i the start index
+      * @param j the end index
+      * @return the new number
+      * @see 
+      *
+    */
+    public static int clearBits(int n, int i, int j){
+        int left = (~0) << (i+1);
+        int right = (1<<j) - 1;
+        return n&(left | right);
+    }
 }
