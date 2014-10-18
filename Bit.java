@@ -89,4 +89,20 @@ public class Bit{
     public static int reverseOneBit(int x, int n){
         return x ^ (( 1 << n ) - 1);
     }
+
+    /** Find the most significant bit of a number
+      *
+      * @param n the number
+      * @return the most significant bit of a number
+      * @see 
+      *
+    */
+    public static int findIndexOfMostSignificantBit(int n){
+        int s = 0;
+        while (n != 0) {
+            s++;
+            n >>= 1;
+        }
+        return s>0 ? s-1 : -1;
+    }
 }
