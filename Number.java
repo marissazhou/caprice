@@ -6,9 +6,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Stack; import java.util.HashMap;
-import java.util.EmptyStackException;
-import java.util.LinkedList;
+import java.util.*;
 
 import java.math.BigInteger; 
 
@@ -17,7 +15,7 @@ public class Number{
     public static void main(String[] args) {
         try {
             if (args.length>0) {
-                System.out.println(getBit(Integer.valueOf(args[0]),Integer.valueOf(args[1])));
+                System.out.println(sumTwoBinaries(args[0],args[1]));
                 //System.out.println(getBit(Integer.valueOf(args[0])));
             }
         } catch (Exception e){
@@ -277,13 +275,18 @@ public class Number{
       */
     public static List<List<Integer>> getCombinationSum(int[] n, int t) {
         List<List<Integer>> rst = new ArrayList<List<Integer>>(); 
-        if (n == 0 || n.length == 0) return rst;
+        if (n == null || n.length == 0) return rst;
 
         List<Integer> curList = new ArrayList<Integer>(); 
-        getCombinationSumHelper(rst, curList, n, t, start);
+        getCombinationSumHelper(rst, curList, n, t, 0);
         return rst;
     }
-    public static void getCombinationSumHelper(rst, curList, n, t, start) {
+    public static void getCombinationSumHelper(
+            List<List<Integer>> rst, 
+            List<Integer> curList, 
+            int[] n, 
+            int t, 
+            int start) {
         if (t == 0) {
             rst.add(new ArrayList(curList));
             return;
@@ -309,10 +312,49 @@ public class Number{
       * @see 
       *
       */
-    public static int sumTwoBinaries(String n1, String n2) {
+    public static String sumTwoBinaries(String n1, String n2) {
+        if (n1 == null) return n2;
+        if (n2 == null) return n1;
+
         int carry = 0;
         int sum = 0;
-        int len = 1 + (n1.length() > n2.length()? n1.length() : n2.length());
-        return sum; 
+        int cur = 0;
+
+        int i = n1.length()-1;
+        int j = n2.length()-1;
+        StringBuffer sb = new StringBuffer();
+        while (i>=0 && j>=0) {
+            if (n1.charAt(i) == '1' && n2.charAt(j) == '1') {
+                sb.insert(0, carry);
+                carry = 1;
+            }
+            else if (n1.charAt(i) == '0' && n2.charAt(j) == '1'
+                    || n1.charAt(i) == '1' && n2.charAt(j) == '0') {
+                cur = carry==1? 0 : 1;
+                sb.insert(0, cur);
+            }
+            else {
+                sb.insert(0, carry);
+                carry = 0;
+            }
+            i--; j--;
+        }
+        while (i >= 0) {
+            if (carry == 1) {
+                cur = n1.charAt(i) == '1' ? 0 : 1;
+                carry = n1.charAt(i) == '1' ? 1 : 0;
+            }
+            sb.insert(0, n1.charAt(i--));
+        }
+        while (j >= 0) {
+            if (carry == 1) {
+                cur = n2.charAt(j) == '1' ? 0 : 1;
+                carry = n2.charAt(j) == '1' ? 1 : 0;
+            }
+            sb.insert(0, n2.charAt(j--));
+        }
+        if (carry == 1) 
+            sb.insert(0, '1');
+        return sb.toString(); 
     }
 }
