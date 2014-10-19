@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -28,7 +29,12 @@ public class Strings{
                 String[] SET_VALUES = new String[]{"hot","dot","dog","lot","log"};
                 HashSet<String> dict = new HashSet<String>(Arrays.asList(SET_VALUES));
                 int i = wordLadder("hit", "cog", dict);
-                System.out.println(i);
+                int[] s = getOverlay(args[0]);
+                for (int j : s) {
+                    System.out.print(j);
+                    System.out.print("");
+                }
+                System.out.println();
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -274,6 +280,7 @@ public class Strings{
             String input) {
         return null;
     }
+
     /** KMP 
       * 
       * @param s the string  
@@ -386,23 +393,25 @@ public class Strings{
     public static int wordLadderGraph(String start, 
             String end, 
             HashSet<String> dict) { 
+        return 0;
     }
+
 
     /** LadderNode class for WordLadder II
       * 
     */
-    public class LadderNode {
+    public static class LadderNode {
         public int dist;
         public String str;
-        public LinkedList<Node> prev; 
+        public LinkedList<LadderNode> prev; 
 
-        public Node(int dist, String str) { 
+        public LadderNode(int dist, String str) { 
             this.dist = dist;
             this.str = str;
-            this.prev = new LinkedList<Node>();
+            this.prev = new LinkedList<LadderNode>();
         }
 
-        public void addPrev(Node pNode) {
+        public void addPrev(LadderNode pNode) {
             prev.add(pNode);
         }
     }
@@ -451,7 +460,7 @@ public class Strings{
                             LadderNode node = map.get(str); 
                             LadderNode newNode = 
                                 new LadderNode(node.dist + 1, newStr);
-                            newNode.prev = new LinkedList<Node>();
+                            newNode.prev = new LinkedList<LadderNode>();
                             newNode.prev.add(node);
                             map.put(newStr, newNode);
                             queue.offer(newStr);
@@ -505,10 +514,35 @@ public class Strings{
         if (!end.prev.isEmpty()) {
             for (LadderNode prevNode : end.prev) {
                 getPaths(prevNode, map,
-                        new ArrayList<String>(curPath));
+                        new ArrayList<String>(curPath), paths);
             }
         } else {
             getPaths(null, map, curPath, paths);
         }
     }
+
+    /** Edit Distance 
+      * 
+      * @param s1 String 1
+      * @param s2 String 2
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static int editDistance(String s1, String s2) {
+        return 0;
+    }
+
+    /** if two strings differ by one character
+      * 
+      * @param s1 String 1
+      * @param s2 String 2
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static int ifDifferByOneChar(String s1, String s2) {
+        return 0;
+    }
+
 }
