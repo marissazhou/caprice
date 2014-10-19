@@ -265,4 +265,54 @@ public class Number{
     public static boolean getBit(int n, int i) {
         return (n & (1<<(i-1))) != 0;
     }
+
+    /** Given a set of candidate numbers (C) and a target 
+        number (T), find all unique combinations in C 
+        where the candidate numbers sums to T.
+      * 
+      * @param n sorted array of numbers 
+      * @return true/false
+      * @see 
+      *
+      */
+    public static List<List<Integer>> getCombinationSum(int[] n, int t) {
+        List<List<Integer>> rst = new ArrayList<List<Integer>>(); 
+        if (n == 0 || n.length == 0) return rst;
+
+        List<Integer> curList = new ArrayList<Integer>(); 
+        getCombinationSumHelper(rst, curList, n, t, start);
+        return rst;
+    }
+    public static void getCombinationSumHelper(rst, curList, n, t, start) {
+        if (t == 0) {
+            rst.add(new ArrayList(curList));
+            return;
+        }
+        int prev = -1; // if allow duplicates, delete this
+        for (int i=start; i<=n.length; i++) {
+            if (n[i] > t) break;
+            // if allow duplicates, delete this
+            if (prev != -1 && prev == n[i]) continue; 
+
+            curList.add(n[i]);
+            getCombinationSumHelper(rst, curList, n, t-n[i], i);
+            curList.remove(curList.size());
+            prev = n[i]; // if allow duplicates, delete this
+        }
+    }
+
+    /**  Add two binary numbers (Input as a string)
+      * 
+      * @param n1 
+      * @param n2
+      * @return sum
+      * @see 
+      *
+      */
+    public static int sumTwoBinaries(String n1, String n2) {
+        int carry = 0;
+        int sum = 0;
+        int len = 1 + (n1.length() > n2.length()? n1.length() : n2.length());
+        return sum; 
+    }
 }
