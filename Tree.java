@@ -6,6 +6,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.NoSuchElementException;
 
 import java.util.Stack;
 import java.util.EmptyStackException;
@@ -17,10 +18,9 @@ public class Tree{
         Unvisited, Visited, Visiting;
     }
 
-/**
- * Definition for binary tree
- */
-
+    /**
+     * Definition for binary tree
+     */
     public class TreeNode {
         int val;
         TreeNode left;
@@ -28,6 +28,61 @@ public class Tree{
         TreeNode(int x) { val = x; }
     }
 
+    /**
+     * Definition for Iterator for binary tree, inorder
+     */
+    public class Iterator {
+        TreeNode next;
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+
+        while (next != null && next.left != null) {
+            next = next.left;
+        }
+
+        Iterator(TreeNode root) {
+            pushLeft(root);
+        }
+
+        public boolean hasNext() {  
+             return !stack.isEmpty();  
+        }  
+
+        public void pushLeft(TreeNode cur){
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+        }
+
+        TreeNode next() {
+            TreeNode r = next;
+            // with parent pointer
+            /* 
+            if (next == null) throw new NoSuchElementException();
+            if (next.right != null) {
+                next = next.right;
+                while (next.left != null) 
+                    next = next.left;
+            } else {
+                while (next.parent == null) {
+                    next == null;
+                    return r;
+                }
+                if (next.parent.left == next) {
+                    next == next.parent;
+                    return r;
+                }
+                next = next.parent;
+            }
+            */
+
+            // without parent pointer
+            if (!hasNext()) throw new NoSuchElementException();
+            TreeNode cur = stack.pop();
+            pushLeft(cur.right);
+            return cur.val;
+        }
+    }
 
     public static void main(String[] args) {
         try {
@@ -280,5 +335,16 @@ public class Tree{
             System.out.println(p.left, level-1);
             System.out.println(p.right, level-1);
         }
+    }
+
+    /** Create an iterator to traverse a binary tree
+      * 
+      * @param root the root of the tree
+      * @return 
+      * @see 
+      *
+    */
+    public static void levelTraverseDFS(TreeNode root) {
+        if (root == null) return;
     }
 }
