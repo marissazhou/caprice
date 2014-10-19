@@ -359,4 +359,47 @@ public class Tree{
         }
         return values;
     }
+
+    /** Find the kth smallest number in a BST, inorder traverse 
+      * 
+      * @param root the root of the tree
+      * @return 
+      * @see 
+      *
+    */
+    public static int kthSmallestBST(TreeNode root, k) {
+        if (root == null) return 0;
+        Stack stack = new Stack();
+        TreeNode cur = root;
+        int value = root.val;
+        while ((!stack.isEmpty() || cur != null ) && k>0) {
+            if (current != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                value = cur.val;
+                cur = cur.right;
+                k--;
+            }
+        }
+        return value;
+    }
+    public static ArrayList<Integer> inorderTaversalIterative(TreeNode root) {
+        ArrayList<Integer> values = new ArrayList<Integer>();
+        if (root == null) return values;
+        Stack stack = new Stack();
+        TreeNode cur = root;
+        while (!stack.isEmpty() || cur != null) {
+            if (current != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                values.add(cur.val);
+                cur = cur.right;
+            }
+        }
+        return values;
+    }
 }
