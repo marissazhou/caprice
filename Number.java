@@ -15,7 +15,15 @@ public class Number{
     public static void main(String[] args) {
         try {
             if (args.length>0) {
-                System.out.println(sumTwoBinaries(args[0],args[1]));
+                int[] a = new int[]{1,2,3,45,1,3,45,6,5};
+                //System.out.println(sumTwoBinaries(args[0],args[1]));
+                Sort.quickSort(a, 0, a.length);
+                for (int i : a) {
+                    System.out.print(i);
+                    System.out.print(" ");
+                }
+                System.out.println();
+            
                 //System.out.println(getBit(Integer.valueOf(args[0])));
             }
         } catch (Exception e){
@@ -216,7 +224,7 @@ public class Number{
         return string2Int(a) * string2Int(b);
     }
     public static int string2Int(String s) {
-        if (a == null || s.length() == 0) return 0;
+        if (s == null || s.length() == 0) return 0;
         int rst = 0;
         for (int i=0; i<s.length(); i++){
             rst = rst * 10 + (s.charAt(i)-'a');
@@ -390,11 +398,11 @@ public class Number{
     public static int[] twoSum(int[] numbers, int target) {
         if (numbers == null || numbers.length == 0) return null;
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>(); 
-        for (int i=0; i<numbers.length(); i++){
+        for (int i=0; i<numbers.length; i++){
             map.put(numbers[i], i+1);
         }
         int[] rst = new int[2];
-        for (int i=0; i<numbers.length(); i++){
+        for (int i=0; i<numbers.length; i++){
             int left = target - numbers[i];
             if (map.containsKey(left)) {
                 int i1 = i + 1;
@@ -417,6 +425,7 @@ public class Number{
       *
       */
     public static int[] threeSum(int[] numbers, int target) {
+        return null;
     }
 
     /**  4 sum
@@ -428,6 +437,7 @@ public class Number{
       *
       */
     public static int[] fourSum(int[] numbers, int target) {
+        return null;
     }
 
     /**  reverse integer
@@ -438,10 +448,10 @@ public class Number{
       *
       */
     public static int[] reverseInteger(int n) {
+        return null;
     }
 
-
-    /** Clone Graph
+    /** two time int array overtime
       * 
       * @param numbers
       * @param target 
@@ -449,6 +459,119 @@ public class Number{
       * @see 
       *
       */
-    public static int[] fourSum(int[] numbers, int target) {
+    public static boolean isOverlap(int[] a1, int[] a2) {
+        if (a1 == null || a1.length == 0
+                || a2 == null || a2.length == 0) return false;
+        Sort.quickSort(a1, 0, a1.length-1);
+        Sort.quickSort(a2, 0, a2.length-1);
+        return false;
+    }
+
+    /** Permutation, including next permutatin, Permutation Sequence, all permutation, all permutation with duplicates
+      * Implement next permutation, which rearranges 
+      * numbers into the lexicographically next greater 
+      * permutation of numbers.
+      * 
+      * @param numbers
+      * @param target 
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static void nextPermutation(int[] num) {
+        if (num == null || num.length == 0) return;
+
+        int len = num.length;
+        for (int i=len-2; i>=0; i--) { // i records turning point
+            if (num[i+1] > num[i]) {
+                // j records first larger num from the tail 
+                // to the element before i+1
+                int j = len-1;
+                for (; j>i+1; j--) {
+                    if (num[j] > num[i]) break;
+                }
+                swap(num, i, j);
+                reverse(num, i+1, len-1);
+                return;
+            }
+        }
+        reverse(num, 0, len-1);
+    }
+    private int void reverse(int[] num, int s, int e){
+        for (int i=s, j=e; i<j; i++, j--)
+            swap(num, i, j);
+    }
+
+    // Given n and k, return the kth permutation sequence.
+    public static String permutationSequence(int n, int k) {
+        if (n <= 0 || k <= 0) return "";
+        boolean[] used = new boolean[n];
+        k--;
+        int factor = 1;
+        ArrayList<Integer> numberList = new ArrayList<Integer>();
+        for (i=1; i<=n; i++){
+            factor *= i;
+            numberList.add(i);
+        }
+        for (int i=0; i<n; i++) {
+            factor /= (n-i);
+            int curIndex = k/factor;
+            k %= factor;
+
+            result += numberList.get(curIndex);
+            numberList.remove(curIndex);
+        }
+        return result;
+    }
+
+    // Given a collection of numbers, return all possible permutations.
+    public static List<List<Integer>> permute(int[] num) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (num == null || num.length == 0) return result;
+
+        Arrays.sort(num);
+        List<Integer> cur = new ArrayList<Integer>();
+        helper(num, result, cur);
+        return result;
+    }
+    private void permuteHelper(int[] num, List<List<Integer>> rst, List<Integer> cur) {
+        if (cur.size() == num.length) {
+            rst.add(new ArrayList(cur));
+            return;
+        }
+        for (int i=0; i<num.length(); i++) {
+            if (cur.contians(num[i])) continue;
+            cur.add(num[0]);
+            permutateHelper(num, rst, cur);
+            cur.remove(cur.size());
+        }
+    }
+
+    // Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+    public static List<List<Integer>> permuteDuplicate(int[] num) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if (num == null || num.length == 0) return result;
+
+        Arrays.sort(num);
+        List<Integer> cur = new ArrayList<Integer>();
+        boolean[] checked = new boolean[num.length];
+        Arrays.fill(checked, false);
+        helper(num, checked, result, cur);
+        return result;
+    }
+    private void permuteUniqueHelper(int[] num, boolean[] checked, List<List<Integer>> result, List<Integer> cur){
+        if (cur.size() == num.length){
+            result.add(new ArrayList<Integer>(cur));
+            return;
+        }
+        for (int i=0; i<num.length; i++){
+            //if (checked[i] || (i != 0 && num[i] == num[i - 1] && !checked[i - 1])) continue;
+            if (checked[i] || (i != 0 && num[i] == num[i - 1]) && !checked[i - 1]) continue;
+            cur.add(num[i]);
+            checked[i] = true;
+            helper(num, checked, result, cur);
+            cur.remove(cur.size()-1);
+            checked[i] = false;
+        }
     }
 }
