@@ -337,14 +337,26 @@ public class Tree{
         }
     }
 
-    /** Create an iterator to traverse a binary tree
+    /** Print the tree in level order but using BFS
+      * It is easy to use Queue for BFS level order
       * 
       * @param root the root of the tree
       * @return 
       * @see 
       *
     */
-    public static void levelTraverseDFS(TreeNode root) {
+    public static ArrayList<Integer> levelTraverseBFS(TreeNode root) {
         if (root == null) return;
+        Queue q = new LinkedList<TreeNode>();
+        ArrayList<Integer> values = new ArrayList<Integer>();
+
+        q.offer(root);
+        while (!q.isEmpty()) {
+            TreeNode cur = q.poll();
+            values.add(cur.val);
+            if (cur.left != null) q.offer(cur.left);
+            if (cur.right != null) q.offer(cur.right);
+        }
+        return values;
     }
 }
