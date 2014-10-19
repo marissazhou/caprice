@@ -203,6 +203,27 @@ public class Number{
         return sum;
     }
 
+    /** multiplication without casting
+      * a*b = a*(x*2^0 + x*2^1....x*2^n),
+      * 
+      * @param a 
+      * @param b 
+      * @return the multiple result
+      * @see 
+      *
+      */
+    public static int multiply(String a, String b) {
+        return string2Int(a) * string2Int(b);
+    }
+    public static int string2Int(String s) {
+        if (a == null || s.length() == 0) return 0;
+        int rst = 0;
+        for (int i=0; i<s.length(); i++){
+            rst = rst * 10 + (s.charAt(i)-'a');
+        }
+        return rst;
+    }
+
     /** is two numbers with the same sign 
       * 
       * @param x 
@@ -391,7 +412,7 @@ public class Number{
       * 
       * @param numbers
       * @param target 
-      * @return all sum combination
+      * @return all 3 sum 
       * @see 
       *
       */
@@ -399,6 +420,28 @@ public class Number{
     }
 
     /**  4 sum
+      * 
+      * @param numbers
+      * @param target 
+      * @return all four sum 
+      * @see 
+      *
+      */
+    public static int[] fourSum(int[] numbers, int target) {
+    }
+
+    /**  reverse integer
+      * 
+      * @param n
+      * @return n
+      * @see 
+      *
+      */
+    public static int[] reverseInteger(int n) {
+    }
+
+
+    /** Clone Graph
       * 
       * @param numbers
       * @param target 
