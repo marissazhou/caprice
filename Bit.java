@@ -29,7 +29,7 @@ public class Bit{
                     System.out.print(" ");
                 }
                 */
-                int i = reverseOneBit(Integer.valueOf(args[0]), Integer.valueOf(args[1]));
+                int i = numOfBits(Integer.valueOf(args[0]));
                 System.out.println(i);
             }
         } catch (Exception e){
@@ -68,13 +68,9 @@ public class Bit{
     */
     public static int numOfBits(int n){
         int rst = 0;
-        if (n == 0) return rst;
-        else{
-            rst = 0;
-            while (n != 0){
-                n = n & (n-1);
-                rst = rst + 1;
-            }
+        while (n != 0){
+            n = n & (n-1);
+            rst++;
         }
         return rst; 
     }
