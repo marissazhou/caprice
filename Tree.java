@@ -402,4 +402,92 @@ public class Tree{
         }
         return values;
     }
+
+    /** Find the index of an element in an array
+      * 
+      * @param array to search from 
+      * @param val value to search for 
+      * @return 
+      * @see 
+      *
+    */
+    public int findIndex(int[] array, int val) {
+        for (int i=0; i<array.length; i++) {
+            if (val == array[i]) return i;
+        }
+        return -1;
+    }
+
+    /** Construct Binary Tree from Inorder and Postorder Traversal
+      * 
+      * @param inorder inorder traverse of the tree
+      * @param postorder postorder traverse of the tree
+      * @return 
+      * @see 
+      *
+    */
+    public TreeNode buildTreeInPost(int[] inorder, int[] postorder) {
+        if (inorder == null || inorder.length == 0
+                || postorder == null || postorder.length == 0)
+            return null;
+        int is = 0;
+        int ie = inorder.length-1;
+        int ps = 0;
+        int pe = postorder.length-1;
+        buildTreeInPostHelper(inorder, is, ie, postorder, ps, pe);
+    }
+    public TreeNode buildTreeInPostHelper(
+            int[] inorder, 
+            int is, 
+            int ie, 
+            int[] postorder, 
+            int ps, 
+            int pe) {
+        if (is>ie || ps>pe) retrun null;
+        int rVal = postorder[pe];
+        TreeNode root = new TreeNode(rVal);
+        int idx = findIndex(inorder, rVal);
+        root.left = buildTreeInPostHelper(
+                inorder, is, idx-1, postorder, ps, ps+(idx-is)-1);
+        root.right = buildTreeInPostHelper(
+                inorder, idx+1, ie, postorder, ps+(idx-is)+1, pe-1);
+        return root;
+    }
+
+    /** Construct Binary Tree from Inorder and Preorder Traversal
+      * 
+      * @param preorder preorder traverse of the tree
+      * @param inorder inorder traverse of the tree
+      * @return 
+      * @see 
+      *
+    */
+    public TreeNode buildTreePreIn(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0)
+            return null;
+        return buildTreeHelper(
+                preorder, 
+                inorder, 
+                0, 
+                preorder.length-1, 
+                0, 
+                preorder.length-1);
+
+    }
+    private TreeNode buildTreePreInHelper(
+            int[] preorder, 
+            int[] inorder, 
+            int ps, 
+            int pe, 
+            int is, 
+            int ie) {
+        if (pe < ps) return null;
+        TreeNode par = new TreeNode(preorder[ps]);
+        int idx = findIndex(inorder, preorder[ps]);
+        par.left = buildTreeHelper(
+                preorder, inorder, ps+1, ps+idx-is, is, idx-1);
+        par.right = buildTreeHelper(
+                preorder, inorder, idx-ie+pe+1, pe, idx+1, ie);
+        return par;
+    }
 }
