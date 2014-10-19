@@ -357,4 +357,55 @@ public class Number{
             sb.insert(0, '1');
         return sb.toString(); 
     }
+
+    /**  2 sum
+      * 
+      * @param numbers
+      * @param target 
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static int[] twoSum(int[] numbers, int target) {
+        if (numbers == null || numbers.length == 0) return null;
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>(); 
+        for (int i=0; i<numbers.length(); i++){
+            map.put(numbers[i], i+1);
+        }
+        int[] rst = new int[2];
+        for (int i=0; i<numbers.length(); i++){
+            int left = target - numbers[i];
+            if (map.containsKey(left)) {
+                int i1 = i + 1;
+                int i2 = map.get(left);
+                if (i1 == i2) continue;
+                rst[0] = i1;
+                rst[1] = i2;
+                return rst;
+            }
+        }
+        return null;
+    }
+
+    /**  3 sum
+      * 
+      * @param numbers
+      * @param target 
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static int[] threeSum(int[] numbers, int target) {
+    }
+
+    /**  4 sum
+      * 
+      * @param numbers
+      * @param target 
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static int[] fourSum(int[] numbers, int target) {
+    }
 }
