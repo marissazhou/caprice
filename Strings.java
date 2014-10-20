@@ -27,7 +27,7 @@ public class Strings{
         try {
             if (args.length>0){
                 String[] SET_VALUES = new String[]{"hot","dot","dog","lot","log"};
-                int d = editDistance(args[0],args[0].length(),args[1],args[1].length());
+                int d = editDistanceRecursive(args[0],0,args[1],0);
                 /*
                 for (int j : s) {
                     System.out.print(j);
@@ -35,6 +35,9 @@ public class Strings{
                 }
                 */
                 System.out.println(d);
+                d = LevenshteinDistance(args[0],args[0].length(),args[1],args[1].length());
+                System.out.println(d);
+
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -567,4 +570,23 @@ public class Strings{
     public static int palindrome(String s1) {
         return 0;
     }
+// len_s and len_t are the number of characters in string s and t respectively
+static int LevenshteinDistance(String s, int len_s, String t, int len_t)
+{
+  /* base case: empty strings */
+  if (len_s == 0) return len_t;
+  if (len_t == 0) return len_s;
+ 
+  /* test if last characters of the strings match */
+  int cost;
+  if (s.charAt(len_s-1) == t.charAt(len_t-1))
+      cost = 0;
+  else
+      cost = 1;
+ 
+  /* return minimum of delete char from s, delete char from t, and delete char from both */
+  return Math.min(Math.min(LevenshteinDistance(s, len_s - 1, t, len_t    ) + 1,
+                 LevenshteinDistance(s, len_s    , t, len_t - 1) + 1),
+                 LevenshteinDistance(s, len_s - 1, t, len_t - 1) + cost);
+}
 }
