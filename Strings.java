@@ -27,14 +27,14 @@ public class Strings{
         try {
             if (args.length>0){
                 String[] SET_VALUES = new String[]{"hot","dot","dog","lot","log"};
-                HashSet<String> dict = new HashSet<String>(Arrays.asList(SET_VALUES));
-                int i = wordLadder("hit", "cog", dict);
-                int[] s = getOverlay(args[0]);
+                int d = editDistance(args[0],args[0].length(),args[1],args[1].length());
+                /*
                 for (int j : s) {
                     System.out.print(j);
                     System.out.print("");
                 }
-                System.out.println();
+                */
+                System.out.println(d);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -521,7 +521,8 @@ public class Strings{
         }
     }
 
-    /** Edit Distance 
+    /** Edit Distance or called Levenshtein Distance 
+      * Can be recursive or iterative or dp
       * 
       * @param s1 String 1
       * @param s2 String 2
@@ -529,8 +530,18 @@ public class Strings{
       * @see 
       *
       */
-    public static int editDistance(String s1, String s2) {
-        return 0;
+    public static int editDistanceRecursive(
+            String s1, int start1, String s2, int start2) {
+        if (s1 == null && s2 == null) return 0;
+        if (s1 == null || s1.length() == start1) return s2.length();
+        if (s2 == null || s2.length() == start2) return s1.length();
+
+        int cost = 0;
+        if (s1.charAt(start1) != s2.charAt(start2))
+            cost = 1;
+        return Math.min(editDistanceRecursive(s1, start1+1, s2, start2+1)+cost,
+                Math.min(editDistanceRecursive(s1, start1+1, s2, start2),
+                    editDistanceRecursive(s1, start1, s2, start2+1))+1);
     }
 
     /** if two strings differ by one character
@@ -545,4 +556,15 @@ public class Strings{
         return 0;
     }
 
+    /** Palindromes possible from a string without extra space
+      * 
+      * @param s1 String 1
+      * @param s2 String 2
+      * @return all sum combination
+      * @see 
+      *
+      */
+    public static int palindrome(String s1) {
+        return 0;
+    }
 }
