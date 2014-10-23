@@ -14,21 +14,23 @@ public class Matrix{
 
     private static class TrieNode {
         TrieNode parent;
-        TrieNode childern = new char[26];
+        TrieNode[] children = new TrieNode[26];
         boolean isWord = false;
 
-        public TrieNode(TrieNode parent, char[] childern, boolean isWord) {
-        if (parent != null) 
-            this.parent.children[''-'a'] = this;
+        public TrieNode(TrieNode parent, char[] children, boolean isWord) {
+            if (parent != null){ 
+                int idx = 'a'-'a';
+                this.parent.children[idx] = this;
+            }
         }
     }
 
     public static void main(String[] args) {
         try {
             if (args.length>0){
-                setZeros(args[0], args[1]);
+                System.out.println("----------------");
             }
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         System.exit(0);
@@ -36,7 +38,7 @@ public class Matrix{
 
     public static void setZeros(int[][] matrix) throws IOException{
         int[] row = new int[matrix.length];
-        System.out.println(result.toString());
+        System.out.println("result".toString());
     }
 
     /** Search word in Matrix like boggle game
@@ -61,23 +63,25 @@ public class Matrix{
             for (int j=0; j<matrix.length; j++) {
                 if (matrix[i][j] == w.charAt(0)) {
                     checked[i][j] = true; // find seed
-                    searchWordHelper(matrix, checked, word, 1, i, j);
+                    searchWordHelper(matrix, checked, w, 1, i, j);
                 }
             }
         }
+        return checked[matrix.length-1][matrix.length-1];
     }
-    private static void searchWordHelper(
+
+    private static boolean searchWordHelper(
             char[][] matrix, 
             boolean[][] checked, 
-            String word
+            String word,
             int idx,
             int i,
             int j){
         if (idx == word.length() ) return true;
         boolean left = false, right = false, down = false, up = false;
-        if (j>0 && !check[i][j-1]) {
+        if (j>0 && !checked[i][j-1]) {
             if (word.charAt(idx) == matrix[i][j-1]) 
-                matrix[i][j-1] = true;
+                checked[i][j-1] = true;
                 left = searchWordHelper(
                         matrix, 
                         checked, 
@@ -86,9 +90,9 @@ public class Matrix{
                         i,
                         j-1);
         }
-        if (i>0 && !check[i-1][j]) {
+        if (i>0 && !checked[i-1][j]) {
             if (word.charAt(idx) == matrix[i][j-1]) 
-                matrix[i-1][j] = true;
+                checked[i-1][j] = true;
                 up = searchWordHelper(
                         matrix, 
                         checked, 
@@ -97,9 +101,9 @@ public class Matrix{
                         i-1,
                         j);
         }
-        if (i<matrix.length-1 && !check[i+1][j]) {
+        if (i<matrix.length-1 && !checked[i+1][j]) {
             if (word.charAt(idx) == matrix[i+1][j]) 
-                matrix[i+1][j] = true;
+                checked[i+1][j] = true;
                 down = searchWordHelper(
                         matrix, 
                         checked, 
@@ -108,9 +112,9 @@ public class Matrix{
                         i+1,
                         j);
         }
-        if (i<matrix.length-1 && !check[i][j+1]) {
+        if (i<matrix.length-1 && !checked[i][j+1]) {
             if (word.charAt(idx) == matrix[i][j+1]) 
-                matrix[i][j+1] = true;
+                checked[i][j+1] = true;
                 right = searchWordHelper(
                         matrix, 
                         checked, 
@@ -120,5 +124,27 @@ public class Matrix{
                         j+1);
         }
         return left || right || up || down;
+    }
+
+    /** Find how many cluster of 1s in a matrix
+      * 
+      * @param matrix
+      * @return number of clusters
+      * @see 
+      *
+      */
+    public static int twoPass(int[][] matrix) {
+        if (matrix == null || matrix.length == 0) return 0;
+        int c = 0;
+        for (int i=0; i<matrix.length; i++) {
+            for (int j=0; j<matrix[0].length, j++) {
+                if (!isNeibourPainted(matrix, i, j))
+                    c++;
+            }
+        }
+        return c;
+    }
+    public static boolean isNeibourPainted(int[][] matrix, itn i, int j) {
+        return false;
     }
 }
