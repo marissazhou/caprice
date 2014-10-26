@@ -272,6 +272,57 @@ public class Strings{
         return rst;
     }
     
+
+    /** isMatch for RK Algorithm
+      * 
+      * @param s the string  
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    private static boolean isMatchRK(char S, int i, char P, int m) {
+        int is, ip;
+        for (is=i, ip=0; is != m && ip != m; is++, ip++){
+            if (S[is] != P[is])
+                return false;
+        }
+        return true;
+    }
+
+    /** RK Algorithm for StrStr 
+      * 
+      * @param s the string  
+      * @return List of all anagrams
+      * @see 
+      *
+    */
+    public static String strStrRK(String haystack, String needle) { 
+        int m = haystack.length();
+        int n = needle.length();
+        if(n>m) return null;
+
+        int h = 1;
+        int A = 0;
+        int st = 0;
+        int i;
+
+        for (i = 0; i < m - 1; i++) {
+            h = (h*d) % q;
+        }
+
+        for (i = 0; i != m; i++) {
+            A = (d*A + (needle.get(i) - 'a')) % q;
+            St = (d*St + (haystack.get(i) - 'a')) % q;
+        }
+
+        for (i=0; i != n-m; i++) {
+            if (A == St)
+                if (isMatchRK(S, i, P, m))
+                    return haystack.substring(i);
+            St = (d*(St - h*(S[i]-'a'))+(S[i+m]-'a')) % q;
+        }
+        return null;
+    }
     /** Retrieve words from a dictionary that are made up of a subsequence of characters in an input string, given an input "ABAT", matching words may include "BAT", "TAB", non-matching words may be "BART" or "BAR".
       * 
       * @param s the string  
