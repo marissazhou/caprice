@@ -21,7 +21,7 @@ public class Sort{
         try {
             if (args.length>0){
                 int[] A = new int[]{1,2,0,1,2,0,1,2,0,2,2,1,2,0,2,1,1,1,0};
-                sort3Colors(A);
+                A = bucketSort(A);
                 for (int i=0; i<A.length; i++) { 
                     System.out.print(A[i]);
                     System.out.print(" ");
@@ -81,6 +81,8 @@ public class Sort{
     /** QuickSort
       * 
       * @param a the array to be sorted 
+      * @param start start index
+      * @param end end index
       * @return the sorted array
       * @see 
       *
@@ -104,5 +106,44 @@ public class Sort{
             quickSort(a, start, j);
         if (end > i)
             quickSort(a, i, end);
+    }
+
+    /** Bucket Sort / Bin Sort / Counting Sort
+      * 
+      * @param a the array to be sorted 
+      * @param start start index
+      * @param end end index
+      * @return the sorted array
+      * @see 
+      *
+    */
+    public static int[] bucketSort(int[] a) {
+        int max = a[0];
+        for (int n : a) {
+            if (n>max)
+                max = n;
+        }
+        int[] count = new int[max];
+        int[] output = new int[a.length];
+        System.out.println("max");
+        System.out.println(max);
+        for (int n : a) {
+            System.out.println("n");
+            System.out.println(n);
+            count[n-1] += 1;
+        }
+        // calculate the starting index for each key
+        int total = 0;
+        for (int i=0; i<a.length; i++){
+            int tmp = count[i];
+            count[i] = total;
+            total += tmp;
+        }
+        // copy back to output array, presering order of inputs with equal keys
+        for (int i=0; i<a.length; i++){
+            output[count[a[i]]] = a[i];
+            count[a[i]] += 1;
+        }
+        return output;
     }
 }
