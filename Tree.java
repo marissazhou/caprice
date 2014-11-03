@@ -490,4 +490,33 @@ public class Tree{
                 preorder, inorder, idx-ie+pe+1, pe, idx+1, ie);
         return par;
     }
+
+    /** Level-order traversal of bst, using one queue
+      * 
+      * @param root root of the tree
+      * @return 
+      * @see 
+      *
+    */
+    public List<List<Integer> levelTraverse(TreeNode root) {
+		List<List<Integer>> rst = new ArrayList<List<Integer>>();
+        if (root == null) return rst;
+        
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        q.offer(root);
+        List<Integer> cur;
+        while(!q.isEmpty()){
+            cur = new ArrayList<Integer>();
+            int s = q.size();
+            for (int i=0; i<s; i++){
+                TreeNode node = q.poll();
+                cur.add(node.val);
+                if (node.left != null) q.offer(node.left);
+                if (node.right != null) q.offer(node.right);
+            }
+            rst.add(cur);
+        }
+        return rst;
+    }
+	}
 }
