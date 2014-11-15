@@ -7,12 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.util.Stack;
-import java.util.EmptyStackException;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 public class Array{
     /**
@@ -36,6 +31,11 @@ public class Array{
         try {
             if (args.length>0){
                 System.out.println();
+                int[] a = new int[]{10,9,1,2,3,4,3,3,5,6,7};
+                ArrayList<Integer> b = longestConsecutiveSequence(a);
+                for (int i : b) {
+                    System.out.println(i);
+                }
                 if (isSubset(new int[]{10,9,1,2,3,4}, new int[]{2,11}))
                     System.out.println("yes");
             }
@@ -201,5 +201,82 @@ public class Array{
             System.out.print(i + " ");
         }
         System.out.println();
+    }
+
+    /**  Return length of the Longest Consecutive Sequense
+      * 
+      * @param a the array 
+      * @return the length of the longest consecutive sequence 
+      * @see 
+      *
+    */
+    public static int longestConsecutiveSequenceLength(int[] a){
+        if (a == null || a.length == 0) return 0;
+        int maxl = 0;
+        HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+        for (int e : a) {
+            hm.put(e, 0);
+        }
+        ArrayList<Integer> rst = new ArrayList<Integer>();
+        for (int e : a) {
+            if (hm.get(e) == 1) continue;
+            int tmp = e;
+            int tmpl = 1;
+            while (hm.containsKey(tmp+1)) {
+                tmpl++;
+                tmp++;
+                hm.put(tmp, 1);
+            }
+            tmp = e;
+            while (hm.containsKey(tmp-1)) {
+                tmpl++;
+                tmp--;
+                hm.put(tmp, 1);
+            }
+            maxl = Math.max(maxl, tmpl);
+        }
+        return maxl;
+    }
+
+    /**  Return the Longest Consecutive Sequense
+      * 
+      * @param a the array 
+      * @return the longest consecutive sequence 
+      * @see 
+      *
+    */
+    public static ArrayList<Integer> longestConsecutiveSequence(int[] a){
+        ArrayList<Integer> rst = new ArrayList<Integer>();
+        if (a == null || a.length == 0) return rst;
+        int maxl = 0;
+        HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+        for (int e : a) {
+            hm.put(e, 0);
+        }
+        for (int e : a) {
+            if (hm.get(e) == 1) continue;
+            int tmp = e;
+            int tmpl = 1;
+            ArrayList<Integer> tmplist = new ArrayList<Integer>();
+            tmplist.add(tmp);
+            while (hm.containsKey(tmp+1)) {
+                tmpl++;
+                tmp--;
+                hm.put(tmp, 1);
+                tmplist.add(tmp);
+            }
+            tmp = e;
+            while (hm.containsKey(tmp-1)) {
+                tmpl++;
+                tmp++;
+                hm.put(tmp, 1);
+                tmplist.add(tmp);
+            }
+            if (tmpl > maxl) {
+                maxl = tmpl;
+                rst = tmplist;
+            }
+        }
+        return rst;
     }
 }
