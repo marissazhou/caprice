@@ -17,11 +17,15 @@ public class Number{
             if (args.length>0) {
                 int[] a = new int[]{1,2,3,45,1,3,45,6,5};
                 //System.out.println(sumTwoBinaries(args[0],args[1]));
-                Sort.quickSort(a, 0, a.length);
+                //Sort.quickSort(a, 0, a.length);
+                int val = divideNoDivision(args[0], args[1]);
+                /*
                 for (int i : a) {
                     System.out.print(i);
                     System.out.print(" ");
                 }
+                */
+                System.out.print(val);
                 System.out.println();
             
                 //System.out.println(getBit(Integer.valueOf(args[0])));
@@ -58,6 +62,23 @@ public class Number{
                 System.out.println(i+" ");
             }
         }
+    }
+
+    /*
+       find all the primes from 1 to n
+    */
+    public static boolean[] sieve(int n) {
+        boolean[] prime = new boolean[n+1];
+        Arrays.fill(prime, true);
+        prime[0] = false;
+        prime[1] = false;
+        int m = Math.sqrt(n);
+        for (int i=2; i<=m; i++) {
+            if (prime[i])
+                for (int k = i+i; k<=n; k += i)
+                    prime[k] = false;
+        }
+        return prime;
     }
     public static void getMaxResult(long n) {
         /*
@@ -135,6 +156,39 @@ public class Number{
         double q = 1 / p;
         return (long) (( Math.pow(p, n) + Math.pow(q, n)) / Math.sqrt(5));
     }
+
+    /**  division implementation without division
+      * 
+      * @param x dividend
+      * @param y divisor
+      * @return the division result
+      * @see 
+      *
+      */
+    public static int divideNoDivision(int dividend, int divisor) {
+        int quotient = 1;
+        int denom = divisor;
+        int current = 1;
+        int answer = 0;
+        if (dividend == denom) return 1;
+        if (dividend < denom) return 0;
+        while(denom <= dividend){
+            denom <<= 1;
+            current <<= 1;
+        }
+        denom >>= 1;
+        current >>= 1;
+
+        while (current != 0) {
+            if (dividend <= denom) {
+                dividend -= denom;
+                answer |= current;
+            }
+            denom >>= 1;
+            current >>= 1;
+        }
+        return answer;
+	}
 
     /**  division implementation without +, - or multiplication
       * 
@@ -497,7 +551,7 @@ public class Number{
         }
         reverse(num, 0, len-1);
     }
-    private int void reverse(int[] num, int s, int e){
+    private void reverse(int[] num, int s, int e){
         for (int i=s, j=e; i<j; i++, j--)
             swap(num, i, j);
     }
