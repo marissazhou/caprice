@@ -44,6 +44,10 @@ public class Number{
         // similar to quick sort
         return 0;
     }
+
+    /*
+        * PRIME
+    */
     public static void printPrime(int n) throws IOException {
         HashMap<Integer,Boolean> primes = new HashMap<Integer,Boolean>();
         primes.put(2, true);
@@ -627,5 +631,49 @@ public class Number{
             cur.remove(cur.size()-1);
             checked[i] = false;
         }
+    }
+
+    /*
+     * GCD greatest common divisor 
+     */
+
+    /*
+       Euclid's algorithm
+     */
+    public static int gcd(int a, int b) {
+        if (b == 0) return a;
+        return gcd(b, a%b);
+    }
+    /*
+     *Euclid's algorithm to find lowest common multiple
+     */
+    public static int lcm(int a, int b) {
+        return b*a/GCD(a,b);
+    }
+
+    /*
+     * Bases
+     */
+    public int toDecimal(int n, int b) {
+        int result = 0;
+        int multiplier = 1;
+
+        while (n>0) {
+            result      += n%10*multiplier;
+            multiplier  *= b;
+            n           /= 10
+        }
+        return result;
+    }
+    public int fromDecimal(int n, int b) {
+        int result = 0;
+        int multiplier = 1;
+
+        while (n>0) {
+            result += n%b*multiplier;
+            multiplier *= 10;
+            n /= b;
+        }
+        return result;
     }
 }
