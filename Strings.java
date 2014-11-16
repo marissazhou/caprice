@@ -532,6 +532,52 @@ public class Strings{
         return ret;
     }
 
+    /** word break
+      * 
+      * @param s String 
+      * @param dict dictionary of words
+      * @return true/false
+      * @see 
+      *
+    */
+    public static boolean wordBreak(String s, Set<String> dict){
+        if (s == null || s.length() == 0) return false;
+        if (dict == null || dict.size() == 0) return false;
+        for (int i=1; i<s.length(); i++) {
+            if (dict.contains(s.substring(0, i)0 && wordBreak(s.substring(i), dict)) 
+                return true;
+        }
+        return false;
+    }
+    public boolean wordBreak_DP(String s, Set<String> dict) {
+        if (s == null || s.length() == 0) return false;
+        if (dict == null || dict.size() == 0) return false;
+
+        int maxLen = getMaxLen(dict);
+        int len = s.length();
+        boolean[] canSeg = new boolean[len+1];
+        canSeg[0] = true;
+        for (int i=1; i<=len; i++) {
+            canSeg[i] = false;
+            for (int j=1; j<=i&&j<=maxLen; j++) {
+                if (!canSeg[i-j]) continue;
+                if(dict.contains(s.substring(i-j, i))) {
+                    canSeg[i] = true;
+                    break;
+                }
+            }
+        }
+        return canSeg[len];
+    }
+
+    private int getMaxLen(Set<String> dict) {
+        int maxLen = 0;
+        for (String s : dict){
+            maxLen = Math.max(s.length(), maxLen);
+        }
+        return maxLen;
+    }
+
     /** replace the index of the given string with the given char
       * 
       * @param end end node
