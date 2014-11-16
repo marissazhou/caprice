@@ -105,6 +105,8 @@ public class List{
     public static LinkedList reverseDoublyLinkedList(RandomListNode head) {
 
     }
+    public static LinkedList reverseLinkedList(LinkedList head) {
+    }
 
     /** Given numRows, generate the first numRows of Pascal's triangle.
       * 

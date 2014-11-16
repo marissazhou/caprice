@@ -127,7 +127,7 @@ public class Number{
       */
     public static int sqrt(int x) {
         if (x<=0) return 0;
-        long h = 0, l = 0;
+        long h = x, l = 0;
         while(h>=l) {
             long mid = l+(h-l)/2;
             if(x < mid*mid) h = mid - 1;
@@ -661,7 +661,7 @@ public class Number{
         while (n>0) {
             result      += n%10*multiplier;
             multiplier  *= b;
-            n           /= 10
+            n           /= 10;
         }
         return result;
     }
