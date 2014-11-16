@@ -280,7 +280,7 @@ public class Strings{
       * @see 
       *
     */
-    private static boolean isMatchRK(char S, int i, char P, int m) {
+    private static boolean isMatchRK(char[] S, int i, char P[], int m) {
         int is, ip;
         for (is=i, ip=0; is != m && ip != m; is++, ip++){
             if (S[is] != P[is])
@@ -305,22 +305,7 @@ public class Strings{
         int A = 0;
         int st = 0;
         int i;
-
-        for (i = 0; i < m - 1; i++) {
-            h = (h*d) % q;
-        }
-
-        for (i = 0; i != m; i++) {
-            A = (d*A + (needle.get(i) - 'a')) % q;
-            St = (d*St + (haystack.get(i) - 'a')) % q;
-        }
-
-        for (i=0; i != n-m; i++) {
-            if (A == St)
-                if (isMatchRK(S, i, P, m))
-                    return haystack.substring(i);
-            St = (d*(St - h*(S[i]-'a'))+(S[i+m]-'a')) % q;
-        }
+        int q = 1; //?
         return null;
     }
     /** Retrieve words from a dictionary that are made up of a subsequence of characters in an input string, given an input "ABAT", matching words may include "BAT", "TAB", non-matching words may be "BART" or "BAR".
@@ -544,7 +529,7 @@ public class Strings{
         if (s == null || s.length() == 0) return false;
         if (dict == null || dict.size() == 0) return false;
         for (int i=1; i<s.length(); i++) {
-            if (dict.contains(s.substring(0, i)0 && wordBreak(s.substring(i), dict)) 
+            if(dict.contains(s.substring(0, i)) && wordBreak(s.substring(i), dict)) 
                 return true;
         }
         return false;
@@ -667,23 +652,24 @@ public class Strings{
     public static int palindrome(String s1) {
         return 0;
     }
-// len_s and len_t are the number of characters in string s and t respectively
-static int LevenshteinDistance(String s, int len_s, String t, int len_t)
-{
-  /* base case: empty strings */
-  if (len_s == 0) return len_t;
-  if (len_t == 0) return len_s;
- 
-  /* test if last characters of the strings match */
-  int cost;
-  if (s.charAt(len_s-1) == t.charAt(len_t-1))
-      cost = 0;
-  else
-      cost = 1;
- 
-  /* return minimum of delete char from s, delete char from t, and delete char from both */
-  return Math.min(Math.min(LevenshteinDistance(s, len_s - 1, t, len_t    ) + 1,
-                 LevenshteinDistance(s, len_s    , t, len_t - 1) + 1),
-                 LevenshteinDistance(s, len_s - 1, t, len_t - 1) + cost);
-}
+
+    // len_s and len_t are the number of characters in string s and t respectively
+    static int LevenshteinDistance(String s, int len_s, String t, int len_t)
+    {
+      /* base case: empty strings */
+      if (len_s == 0) return len_t;
+      if (len_t == 0) return len_s;
+     
+      /* test if last characters of the strings match */
+      int cost;
+      if (s.charAt(len_s-1) == t.charAt(len_t-1))
+          cost = 0;
+      else
+          cost = 1;
+     
+      /* return minimum of delete char from s, delete char from t, and delete char from both */
+      return Math.min(Math.min(LevenshteinDistance(s, len_s - 1, t, len_t    ) + 1,
+                     LevenshteinDistance(s, len_s    , t, len_t - 1) + 1),
+                     LevenshteinDistance(s, len_s - 1, t, len_t - 1) + cost);
+    }
 }
