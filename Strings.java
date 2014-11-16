@@ -28,6 +28,7 @@ public class Strings{
             if (args.length>0){
                 String[] SET_VALUES = new String[]{"hot","dot","dog","lot","log"};
                 int d = editDistanceRecursive(args[0],0,args[1],0);
+                int d1 = editDistanceDP(args[0], args[1]);
                 /*
                 for (int j : s) {
                     System.out.print(j);
@@ -35,8 +36,11 @@ public class Strings{
                 }
                 */
                 System.out.println(d);
-                d = LevenshteinDistance(args[0],args[0].length(),args[1],args[1].length());
-                System.out.println(d);
+                System.out.println(d1);
+                System.out.println(args[0].length());
+                System.out.println(args[1].length());
+                //d = LevenshteinDistance(args[0],args[0].length(),args[1],args[1].length());
+                //System.out.println(d);
 
             }
         } catch (Exception e){
@@ -618,8 +622,8 @@ public class Strings{
     public static int editDistanceRecursive(
             String s1, int start1, String s2, int start2) {
         if (s1 == null && s2 == null) return 0;
-        if (s1 == null || s1.length() == start1) return s2.length();
-        if (s2 == null || s2.length() == start2) return s1.length();
+        if (s1 == null || s1.length() == start1) return s2.length()-start2;
+        if (s2 == null || s2.length() == start2) return s1.length()-start1;
 
         int cost = 0;
         if (s1.charAt(start1) != s2.charAt(start2))
@@ -627,6 +631,25 @@ public class Strings{
         return Math.min(editDistanceRecursive(s1, start1+1, s2, start2+1)+cost,
                 Math.min(editDistanceRecursive(s1, start1+1, s2, start2),
                     editDistanceRecursive(s1, start1, s2, start2+1))+1);
+    }
+    public static int editDistanceDP(
+            String s1, String s2) {
+        if (s1 == null && s2 == null) return 0;
+        if (s1 == null) return s2.length();
+        if (s2 == null) return s1.length();
+        int m = s1.length();
+        int n = s2.length();
+        int[][] dist = new int[m+1][n+1];
+        for (int i=0; i<=m; i++) dist[i][0] = i;
+        for (int j=1; j<=n; j++) dist[0][j] = j;
+        for (int i=1; i<=m; i++) {
+            for (int j=1; j<=n; j++) {
+                int cost = 0;
+                if (s1.charAt(i-1) != s2.charAt(j-1)) cost = 1;
+                dist[i][j] = Math.min(Math.min(dist[i-1][j]+1, dist[i][j-1]+1), dist[i-1][j-1]+cost);
+            }
+        }
+        return dist[m][n];
     }
 
     /** if two strings differ by one character
