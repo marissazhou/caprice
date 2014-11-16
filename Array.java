@@ -31,13 +31,15 @@ public class Array{
         try {
             if (args.length>0){
                 System.out.println();
-                int[] a = new int[]{10,9,1,2,3,4,3,3,5,6,7};
-                ArrayList<Integer> b = longestConsecutiveSequence(a);
+                int[] a = new int[]{0,0,1,9,1,0,0,2,3,4,3,0,0,3,5,6,7,0,0};
+                int[] b = moveZeroToFront(a);
                 for (int i : b) {
-                    System.out.println(i);
+                    System.out.print(i);
+                    System.out.print("");
                 }
-                if (isSubset(new int[]{10,9,1,2,3,4}, new int[]{2,11}))
-                    System.out.println("yes");
+                System.out.println();
+                //if (isSubset(new int[]{10,9,1,2,3,4}, new int[]{2,11}))
+                //   System.out.println("yes");
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -278,5 +280,28 @@ public class Array{
             }
         }
         return rst;
+    }
+
+    /** Move all non-zero elements into the front of array.
+      * 
+      * @param a the array 
+      * @return the longest consecutive sequence 
+      * @see 
+      * int[] a = new int[]{1,9,1,0,0,2,3,4,3,0,0,3,5,6,7};
+      *
+    */
+    public static int[] moveZeroToFront(int[] a) {
+        if (a==null || a.length == 0) return a;
+        int i=0, j=a.length-1;
+        while(i<j){
+            while (j>i && a[i] == 0) i++;
+            while (j>i && a[j] != 0) j--;
+            if (i<j) {
+                int tmp = a[i];
+                a[i++] = a[j];
+                a[j--] = tmp;
+            }
+        }
+        return a;
     }
 }
