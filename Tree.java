@@ -336,6 +336,23 @@ public class Tree{
             System.out.println(p.right, level-1);
         }
     }
+    // Print all the paths from root to every leaf in a binary tree.
+    public static List<List<Integer>> printRootLeafPath(TreeNode p){
+        ArrayList<ArrayList<Integer>> rst = new ArrayList<ArrayList<Integer>>(); 
+        if (root == null) return rst;
+        rst = 
+
+    }
+    private static void printRootLeafPathHelper(TreeNode root, ArrayList<Integer> path) {
+        if (root == null) return;
+        path.add(root.val);
+        if (root.left == null && root.right == null) {
+            System.out.println(path);
+        } else {
+            printRootLeafPathHelper(root.left, path);
+            printRootLeafPathHelper(root.right, path);
+        }
+    } 
 
     /** Print the tree in level order but using BFS
       * It is easy to use Queue for BFS level order
