@@ -332,8 +332,30 @@ public class Tree{
         if (p == null) return;
         if (level == 1) System.out.println(p.val);
         else {
-            System.out.println(p.left, level-1);
-            System.out.println(p.right, level-1);
+            printlevel(p.left, level-1);
+            printlevel(p.right, level-1);
+        }
+    }
+    // signal to mark end of this level
+    public static void levelPrintDFSQueue(TreeNode root) {
+        if (root == null) return;
+        Queue q = new LinkedList<Integer>();
+        q.offer(root);
+        int s = 1; // level node numbers
+        while (!q.isEmpty()) {
+            int size = s;
+            for (int i=0; i<size; i++) {
+                TreeNode cur = q.poll();
+                System.out.print(cur.val);
+                if (cur.left != null){
+                    q.offer(cur.left);
+                    s++;
+                }
+                if (cur.right != null){
+                    q.offer(cur.right);
+                    s++;
+                }
+            }
         }
     }
     // Print all the paths from root to every leaf in a binary tree.
