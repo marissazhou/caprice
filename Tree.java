@@ -557,5 +557,45 @@ public class Tree{
         fillMap(root.right, hd+1, map);
     }
     // sink 0
+    puboic void sinkZero(TreeNode root) {
+        Queue q = new LinkedList<Node>();
+        sinkZeroHelper(root, q);
+    }
+    puboic void sinkZeroHelper(TreeNode root, Queue q) {
+        if (root == null) return;
+        if (root.val == 0) q.offer(root);
+        else {
+            if (!q.isEmpty()) {
+                swap(root, q.poll());
+            }
+            q.offer(root);
+        }
+        sinkZeroHelper(root.left, q);
+        if (q.peek() == root.left) {
+            q.remove();
+        }
+        sinkZeroHelper(root.right, q);
+        if (q.peek() == root.right) {
+            q.remove();
+        }
+    }
 
+    // is BST, O(nlog(n))
+    public boolean isBST(TreeNode root) {
+       if (root == null) return true; 
+       if (root.left != null && maxValue(node.left) > node.data) return false;
+       if (root.right != null && maxValue(node.right) > node.data) return false;
+       return (isBST(node.left)&&(isBST(node.right));
+    }
+    // is BST, O(n)
+    public boolean isBST(TreeNode root, int low, int high) {
+        isBSTHelper(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    public boolean isBST(TreeNode root, int low, int high) {
+       if (root == null) return true; 
+       if (low < root.data && root.data < high) {
+            return isBST(root.left, low, root.data) && isBST(root.right, root,data, high);
+       }
+       else return false;
+    }
 }
