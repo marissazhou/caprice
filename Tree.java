@@ -535,5 +535,27 @@ public class Tree{
         }
         return rst;
     }
-	}
+    public void printVertical(TreeNode root) {
+        if (root == null) return;
+        HashMap<int, ArrayList<TreeNode>> map = new HashMap<int, ArrayList<TreeNode>>();
+        int hd = 0;
+        fillMap(root, map);
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            for(int i : paris.getValue()) {
+                System.out.print(i);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+    private void fillMap(TreeNode root, int hd, HashMap<int, ArrayList<TreeNode>>) {
+        if (root == null) return;
+        map.get(hd).append(root);
+        fillMap(root.left, hd-1, map);
+        fillMap(root.right, hd+1, map);
+    }
+    // sink 0
+
 }
