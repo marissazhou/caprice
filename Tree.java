@@ -598,4 +598,30 @@ public class Tree{
        }
        else return false;
     }
+    // serialize and deserialize
+    public ArrayList<Char> serializeTree(TreeNode root) {
+        ArrayList<Char> obj = new ArrayList<Char>();
+        serializeTreeHelper(root, obj);
+        return obj;
+    }
+    public void serializeTreeHelper(TreeNode root, ArrayList<Char> obj) {
+        if (root == null) {
+            obj.add('#');
+            return obj;
+        }
+        obj.add(root.val);
+        serializeTreeHelper(root.left, obj);
+        serializeTreeHelper(root.right, obj);
+    }
+    public TreeNode<Char> deserializeTree(ArrayList<Char> obj) {
+        if (obj == null) return null;
+        return deserializeTreeHelper(obj, 0);
+    }
+    public TreeNode<Char> deserializeTreeHelper(ArrayList<Char> obj, int idx) {
+        if (idx >= obj.size() || obj.get(idx) == '#') return null;
+        TreeNode node = new TreeNode(obj.get(idx));
+        node.left = deserializeTreeHelper(obj, ++idx);
+        node.right = deserializeTreeHelper(obj, ++idx);
+        return node;
+    }
 }
